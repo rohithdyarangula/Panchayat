@@ -51,7 +51,7 @@
     "ward": "Ward 05",
     "citizen_name": "Kavita Rao",
     "source": "CITIZEN_PORTAL",
-    "status": "NEW"
+    "status": "IN_PROGRESS"
   },
   {
     "text": "Garbage dump overflowing for last 5 days near Gandhi Bazaar Vegetable Market. Stray cattle and dogs scattering rotting waste, unbearable stench.",
@@ -72,6 +72,33 @@
     "status": "NEW"
   },
   {
+    "text": "Stagnant sewage water breeding dengue and malaria mosquitoes near government primary school in Gandhi Bazaar. Multiple children falling ill, immediate fogging and anti-larval chemical spray required.",
+    "city": "Bengaluru",
+    "locality": "Gandhi Bazaar",
+    "ward": "Ward 09",
+    "citizen_name": "Ananya Joshi",
+    "source": "CITIZEN_PORTAL",
+    "status": "IN_PROGRESS"
+  },
+  {
+    "text": "Dead stray dog carcass rotting on pedestrian road shoulder opposite market complex in Indiranagar. Unbearable stench, attracting vultures, severe epidemic hazard.",
+    "city": "Bengaluru",
+    "locality": "Indiranagar",
+    "ward": "Ward 08",
+    "citizen_name": "Karthik Subbaraj",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Illegal commercial steel barricades and shop extensions completely blocking pedestrian footpath on 100ft Road Koramangala. School children forced to walk on active vehicle carriageway.",
+    "city": "Bengaluru",
+    "locality": "Koramangala",
+    "ward": "Ward 05",
+    "citizen_name": "Kavita Rao",
+    "source": "CITIZEN_PORTAL",
+    "status": "IN_PROGRESS"
+  },
+  {
     "text": "Severe waterlogging and clogged storm drain outside Andheri West Railway Station in Mumbai. Traffic stalled for 3 hours.",
     "city": "Mumbai",
     "locality": "Andheri West",
@@ -86,6 +113,15 @@
     "locality": "Bandra West",
     "ward": "Ward H-West",
     "citizen_name": "Neha Mehta",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Major 4-way traffic signal failure sparking and showing blank at busy junction near Bandra West Linking Road. Massive gridlock and pedestrian near-misses.",
+    "city": "Mumbai",
+    "locality": "Bandra West",
+    "ward": "Ward H-West",
+    "citizen_name": "Farhan Qureshi",
     "source": "CITIZEN_PORTAL",
     "status": "NEW"
   },
@@ -111,7 +147,7 @@
     "text": "Hazardous road crater on ITPL Main Road in Whitefield successfully repaired with asphalt concrete paving.",
     "city": "Bengaluru",
     "locality": "Whitefield",
-    "ward": "Ward 08",
+    "ward": "Ward 15",
     "citizen_name": "Manoj Patel",
     "source": "CITIZEN_PORTAL",
     "status": "RESOLVED"
@@ -120,7 +156,7 @@
     "text": "Sanitation compactor cleared overflowing garbage dumpster and sanitized the entire 100ft road corner in Indiranagar.",
     "city": "Bengaluru",
     "locality": "Indiranagar",
-    "ward": "Ward 03",
+    "ward": "Ward 08",
     "citizen_name": "Gita Shenoy",
     "source": "CITIZEN_PORTAL",
     "status": "RESOLVED"
@@ -128,8 +164,8 @@
   {
     "text": "Streetlight pole fixed with energy-saving LED luminaire on 4th cross residential layout in Malleshwaram.",
     "city": "Bengaluru",
-    "locality": "Malleshwaram",
-    "ward": "Ward 02",
+    "locality": "Majestic / Central",
+    "ward": "Ward 01",
     "citizen_name": "Nandini Swamy",
     "source": "CITIZEN_PORTAL",
     "status": "RESOLVED"

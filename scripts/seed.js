@@ -3,8 +3,7 @@
 
 const path = require('node:path');
 const fs = require('node:fs');
-const { initDatabase } = require('../lib/database');
-const { processBatchComplaints } = require('../lib/ingestionService');
+const { initDatabase, processBatchComplaints } = require('../engine');
 
 async function runSeed() {
   console.log('--- Initializing Database Schema ---');

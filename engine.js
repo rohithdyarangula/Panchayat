@@ -253,11 +253,13 @@ function triageComplaint(text) {
     department = 'ELECTRICAL';
   } else if (/\b(?:sewer|sewers|sewage|drain|drains|drainage|manhole|manholes|water pipe|pipeline|pipe burst|water leak|leakage|waterlogging|tap water|drinking water)\b/i.test(lower)) {
     department = 'WATER_SEWER';
-  } else if (/\b(?:garbage|trash|dump|dumpster|waste|dustbin|debris|litter|rotting)\b/i.test(lower)) {
+  } else if (/\b(?:garbage|trash|dump|dumpster|waste|dustbin|debris|litter|rotting|kachra|safai)\b/i.test(lower)) {
     department = 'SANITATION';
-  } else if (/\b(?:mosquito|mosquitoes|dengue|malaria|clinic|hospital|epidemic|health hazard)\b/i.test(lower)) {
+  } else if (/\b(?:mosquito|mosquitoes|dengue|malaria|clinic|hospital|epidemic|health hazard|carcass|dead animal|dead dog|larval|fogging|contamination|disease|food safety)\b/i.test(lower)) {
     department = 'HEALTH';
-  } else if (/\b(?:pothole|potholes|crater|craters|tar|road|asphalt|divider|speed breaker|footpath|pavement|cave\s*in)\b/i.test(lower)) {
+  } else if (/\b(?:traffic|encroachment|encroaching|barricade|barricades|illegal parking|illegal hoarding|hoardings|billboard|signal|signal breakdown|traffic light|zebra crossing|pedestrian block|park bench|encroached)\b/i.test(lower)) {
+    department = 'TRAFFIC_PARKS';
+  } else if (/\b(?:pothole|potholes|crater|craters|tar|road|asphalt|divider|speed breaker|footpath|pavement|cave\s*in|sadak|gaddha)\b/i.test(lower)) {
     department = 'ROADS';
   }
 
@@ -265,8 +267,8 @@ function triageComplaint(text) {
   let priority_score = 2;
   let urgency_reason = 'Standard civic service disruption requiring scheduled repair.';
 
-  const criticalKeywords = ['spark', 'fire', 'shock', 'electrocution', 'live wire', 'snapped', 'burst', 'hospital', 'school', 'emergency', 'accident', 'collapsed', 'danger', 'open manhole'];
-  const highKeywords = ['overflowing', 'blocked', 'major', 'crater', 'deep', 'flooded', 'stagnant', 'stench', 'severe', 'drinking water', 'contamination'];
+  const criticalKeywords = ['spark', 'fire', 'shock', 'electrocution', 'live wire', 'snapped', 'burst', 'hospital', 'school', 'emergency', 'accident', 'collapsed', 'danger', 'open manhole', 'carcass', 'dead animal', 'signal failure'];
+  const highKeywords = ['overflowing', 'blocked', 'major', 'crater', 'deep', 'flooded', 'stagnant', 'stench', 'severe', 'drinking water', 'contamination', 'dengue', 'malaria', 'encroachment', 'barricade'];
   const lowKeywords = ['flickering', 'dim', 'routine', 'minor', 'cosmetic', 'paint', 'cleaning request', 'slow'];
 
   if (criticalKeywords.some(kw => lower.includes(kw))) {
@@ -294,6 +296,14 @@ function triageComplaint(text) {
     headline = 'Water main leak / pipe rupture causing waterlogging';
   } else if (department === 'SANITATION' && /overflow|dump/i.test(lower)) {
     headline = 'Heavy garbage accumulation & overflowing waste';
+  } else if (department === 'HEALTH' && /mosquito|dengue|malaria|larval/i.test(lower)) {
+    headline = 'Stagnant water mosquito vector breeding & dengue risk';
+  } else if (department === 'HEALTH' && /carcass|dead/i.test(lower)) {
+    headline = 'Dead animal carcass & public bio-hazard on roadway';
+  } else if (department === 'TRAFFIC_PARKS' && /encroach|footpath|barricade/i.test(lower)) {
+    headline = 'Illegal commercial encroachment blocking pedestrian walkway';
+  } else if (department === 'TRAFFIC_PARKS' && /signal|traffic light/i.test(lower)) {
+    headline = 'Traffic signal failure & intersection gridlock danger';
   } else if (department === 'ROADS' && /pothole|crater/i.test(lower)) {
     headline = 'Hazardous road crater / severe pothole damage';
   }
@@ -452,13 +462,23 @@ const OFFICERS_DIRECTORY = [
   { id: 'OFF-103', name: 'Er. Ramesh Babu', designation: 'Executive Engineer (Water/Drainage)', department: 'WATER_SEWER', city: 'Bengaluru', locality: 'Bannerghatta', phone: '+91 98450 11003', email: 'ramesh.b@bwssb.gov.in' },
   { id: 'OFF-104', name: 'Dr. Anita Rao', designation: 'Chief Medical & Health Officer', department: 'HEALTH', city: 'Bengaluru', locality: 'Gandhi Bazaar', phone: '+91 98450 11004', email: 'anita.rao@bbmp.gov.in' },
   { id: 'OFF-105', name: 'Er. Venkatesh M', designation: 'Chief Sanitation Inspector', department: 'SANITATION', city: 'Bengaluru', locality: 'Gandhi Bazaar', phone: '+91 98450 11005', email: 'venkatesh.m@bbmp.gov.in' },
-  { id: 'OFF-106', name: 'Er. Deepak N', designation: 'Ward Infrastructure Engineer', department: 'ROADS', city: 'Bengaluru', locality: 'Majestic / Central', phone: '+91 98450 11006', email: 'deepak.n@bbmp.gov.in' }
+  { id: 'OFF-106', name: 'Er. Deepak N', designation: 'Ward Infrastructure Engineer', department: 'ROADS', city: 'Bengaluru', locality: 'Majestic / Central', phone: '+91 98450 11006', email: 'deepak.n@bbmp.gov.in' },
+  { id: 'OFF-107', name: 'Shri K. Murthy', designation: 'Traffic & Encroachment Inspector', department: 'TRAFFIC_PARKS', city: 'Bengaluru', locality: 'Koramangala', phone: '+91 98450 11007', email: 'k.murthy@bbmp.gov.in' },
+  { id: 'OFF-108', name: 'Er. Sachin Patil', designation: 'Ward Officer (Sanitation & Roads)', department: 'SANITATION', city: 'Mumbai', locality: 'Bandra West', phone: '+91 98200 22001', email: 'sachin.patil@mcgm.gov.in' },
+  { id: 'OFF-109', name: 'Er. Virender Singh', designation: 'Sub-Divisional Engineer (Roads)', department: 'ROADS', city: 'Delhi', locality: 'Connaught Place', phone: '+91 98110 33001', email: 'virender.singh@mcd.gov.in' },
+  { id: 'OFF-110', name: 'Er. K. Srinivas', designation: 'Assistant Divisional Engineer (Electrical)', department: 'ELECTRICAL', city: 'Hyderabad', locality: 'Hitec City', phone: '+91 98490 44001', email: 'srinivas.k@ghmc.gov.in' }
 ];
 
 function getOfficers(city = null, dept = null) {
   let list = OFFICERS_DIRECTORY;
-  if (city && city !== 'ALL') list = list.filter(o => o.city.toLowerCase() === city.toLowerCase());
-  if (dept && dept !== 'ALL') list = list.filter(o => o.department === dept);
+  if (city && city !== 'ALL') {
+    const matched = list.filter(o => o.city.toLowerCase() === city.toLowerCase());
+    if (matched.length > 0) list = matched;
+  }
+  if (dept && dept !== 'ALL') {
+    const matched = list.filter(o => o.department === dept);
+    if (matched.length > 0) list = matched;
+  }
   return list;
 }
 
@@ -480,6 +500,141 @@ try {
     if (!isNaN(num)) complaintCounter = num;
   }
 } catch (e) {}
+
+function ensureDemoExamples() {
+  try {
+    const healthRow = db.prepare(`SELECT count(*) as c FROM incident_clusters WHERE department = 'HEALTH' AND status != 'RESOLVED'`).get();
+    const trafficRow = db.prepare(`SELECT count(*) as c FROM incident_clusters WHERE department = 'TRAFFIC_PARKS' AND status != 'RESOLVED'`).get();
+    
+    if ((healthRow && healthRow.c === 0) || (trafficRow && trafficRow.c === 0)) {
+      const now = new Date().toISOString();
+      const demoItems = [
+        {
+          id: 'INC-201',
+          headline: 'Stagnant water mosquito vector breeding & dengue risk',
+          department: 'HEALTH',
+          priority: 'HIGH',
+          priority_score: 3,
+          urgency_reason: 'Stagnant sewage breeding dengue and malaria vectors near school; fogging & anti-larval spray dispatched.',
+          city: 'Bengaluru',
+          locality: 'Gandhi Bazaar',
+          ward: 'Ward 09',
+          latitude: 12.9431,
+          longitude: 77.5755,
+          location_display: 'Gandhi Bazaar, Bengaluru',
+          status: 'IN_PROGRESS',
+          assigned_officer: 'Dr. Anita Rao (Chief Medical & Health Officer)',
+          assigned_officer_phone: '+91 98450 11004',
+          complaint_count: 3,
+          photo_url: null,
+          created_at: new Date(Date.now() - 3600000 * 5).toISOString(),
+          raw_text: 'Stagnant sewage water breeding dengue and malaria mosquitoes near government primary school in Gandhi Bazaar. Multiple children falling ill, immediate fogging and anti-larval chemical spray required.',
+          citizen_name: 'Ananya Joshi'
+        },
+        {
+          id: 'INC-202',
+          headline: 'Dead animal carcass & public bio-hazard on roadway',
+          department: 'HEALTH',
+          priority: 'CRITICAL',
+          priority_score: 4,
+          urgency_reason: 'Immediate biological infection danger and severe road hazard on pedestrian shoulder.',
+          city: 'Bengaluru',
+          locality: 'Indiranagar',
+          ward: 'Ward 08',
+          latitude: 12.9784,
+          longitude: 77.6408,
+          location_display: 'Indiranagar, Bengaluru',
+          status: 'NEW',
+          assigned_officer: 'Dr. Anita Rao (Chief Medical & Health Officer)',
+          assigned_officer_phone: '+91 98450 11004',
+          complaint_count: 2,
+          photo_url: null,
+          created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
+          raw_text: 'Dead stray dog carcass rotting on pedestrian road shoulder opposite market complex in Indiranagar. Unbearable stench, severe epidemic hazard.',
+          citizen_name: 'Karthik Subbaraj'
+        },
+        {
+          id: 'INC-203',
+          headline: 'Illegal commercial encroachment blocking pedestrian walkway',
+          department: 'TRAFFIC_PARKS',
+          priority: 'HIGH',
+          priority_score: 3,
+          urgency_reason: 'Pedestrians and schoolchildren forced onto heavy vehicle carriage roadway due to illegal steel barrier structures.',
+          city: 'Bengaluru',
+          locality: 'Koramangala',
+          ward: 'Ward 05',
+          latitude: 12.9352,
+          longitude: 77.6245,
+          location_display: 'Koramangala, Bengaluru',
+          status: 'IN_PROGRESS',
+          assigned_officer: 'Shri K. Murthy (Traffic & Encroachment Inspector)',
+          assigned_officer_phone: '+91 98450 11007',
+          complaint_count: 4,
+          photo_url: null,
+          created_at: new Date(Date.now() - 3600000 * 8).toISOString(),
+          raw_text: 'Illegal commercial steel barricades and shop extensions completely blocking pedestrian footpath on 100ft Road Koramangala. School children forced to walk on active vehicle carriageway.',
+          citizen_name: 'Kavita Rao'
+        },
+        {
+          id: 'INC-204',
+          headline: 'Traffic signal failure & intersection gridlock danger',
+          department: 'TRAFFIC_PARKS',
+          priority: 'CRITICAL',
+          priority_score: 4,
+          urgency_reason: 'Uncontrolled high-speed multi-lane traffic intersection with non-functional signal sparking on pole.',
+          city: 'Mumbai',
+          locality: 'Bandra West',
+          ward: 'Ward H-West',
+          latitude: 19.0596,
+          longitude: 72.8295,
+          location_display: 'Bandra West, Mumbai',
+          status: 'NEW',
+          assigned_officer: 'Shri K. Murthy (Traffic & Encroachment Inspector)',
+          assigned_officer_phone: '+91 98450 11007',
+          complaint_count: 5,
+          photo_url: null,
+          created_at: new Date(Date.now() - 3600000 * 1).toISOString(),
+          raw_text: 'Major 4-way traffic signal failure sparking and showing blank at busy junction near Bandra West Linking Road. Massive gridlock and pedestrian near-misses.',
+          citizen_name: 'Neha Mehta'
+        }
+      ];
+
+      for (const item of demoItems) {
+        const deadline = calculateSlaDeadline(item.created_at, item.priority);
+        try {
+          db.prepare(`
+            INSERT OR REPLACE INTO incident_clusters (
+              id, headline, department, priority, priority_score, urgency_reason,
+              city, locality, ward, latitude, longitude, location_display, status,
+              assigned_officer, assigned_officer_phone, complaint_count, sla_deadline,
+              sla_status, is_escalated, escalation_level, photo_url, created_at, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'ON_TRACK', 0, 0, ?, ?, ?)
+          `).run(
+            item.id, item.headline, item.department, item.priority, item.priority_score,
+            item.urgency_reason, item.city, item.locality, item.ward, item.latitude, item.longitude,
+            item.location_display, item.status, item.assigned_officer, item.assigned_officer_phone,
+            item.complaint_count, deadline, item.photo_url, item.created_at, item.created_at
+          );
+
+          db.prepare(`
+            INSERT OR IGNORE INTO complaints (id, raw_text, citizen_name, source, city, locality, extracted_location, ward, cluster_id, photo_url, submitted_at)
+            VALUES (?, ?, ?, 'CITIZEN_PORTAL', ?, ?, ?, ?, ?, ?, ?)
+          `).run(`CMP-${item.id}`, item.raw_text, item.citizen_name, item.city, item.locality, item.locality, item.ward, item.id, item.photo_url, item.created_at);
+
+          db.prepare(`
+            INSERT INTO activity_log (incident_id, action, details, timestamp)
+            VALUES (?, 'AUTO_TRIAGED', ?, ?)
+          `).run(item.id, `Assigned to ${item.assigned_officer} [${item.priority}] SLA Active.`, item.created_at);
+        } catch (e) {
+          console.warn('Demo seeding note:', e.message);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('ensureDemoExamples check skipped:', err.message);
+  }
+}
+ensureDemoExamples();
 
 async function processIncomingComplaint({ text, source = 'PORTAL', citizenName = 'Resident', userCity = null, userLocality = null, userWard = null, userCoords = null, status = 'NEW', photoUrl = null }) {
   if (!text || !text.trim()) throw new Error('Complaint text cannot be empty');
@@ -560,13 +715,18 @@ async function processIncomingComplaint({ text, source = 'PORTAL', citizenName =
     clusterId = `INC-${incidentCounter}`;
     const slaDeadline = calculateSlaDeadline(now, triage.priority);
 
+    const matchingOfficers = getOfficers(loc.city, triage.department);
+    const assignedOfficerObj = matchingOfficers.length > 0 ? matchingOfficers[0] : null;
+    const assignedOfficerName = assignedOfficerObj ? `${assignedOfficerObj.name} (${assignedOfficerObj.designation})` : 'Unassigned';
+    const assignedOfficerPhone = assignedOfficerObj ? assignedOfficerObj.phone : '';
+
     db.prepare(`
       INSERT INTO incident_clusters (
         id, headline, department, priority, priority_score, urgency_reason,
         city, locality, ward, latitude, longitude, location_display, status,
         assigned_officer, assigned_officer_phone, complaint_count, sla_deadline,
         sla_status, is_escalated, escalation_level, photo_url, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Unassigned', '', 1, ?, 'ON_TRACK', 0, 0, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, 'ON_TRACK', 0, 0, ?, ?, ?)
     `).run(
       clusterId,
       triage.headline,
@@ -581,6 +741,8 @@ async function processIncomingComplaint({ text, source = 'PORTAL', citizenName =
       loc.longitude,
       loc.locationDisplay,
       status || 'NEW',
+      assignedOfficerName,
+      assignedOfficerPhone,
       slaDeadline,
       photoUrl || null,
       now,

@@ -10,5 +10,6 @@ data/*.sqlite-*
 
 # Node modules & OS metadata
 node_modules/
+public/uploads/
 .DS_Store
 *.log

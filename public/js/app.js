@@ -184,7 +184,8 @@ const I18N = {
       SANITATION: '🗑️ Garbage & Sanitation',
       WATER_SEWER: '💧 Water & Sewage',
       ELECTRICAL: '⚡ Electrical & Lights',
-      HEALTH: '🏥 Public Health'
+      HEALTH: '🏥 Public Health',
+      TRAFFIC_PARKS: '🚦 Encroachment & Traffic'
     },
     priorityLabel: 'Priority:',
     allPriorities: 'All Priorities',
@@ -382,7 +383,8 @@ const I18N = {
       SANITATION: '🗑️ చెత్త & పారిశుద్ధ్యం',
       WATER_SEWER: '💧 నీరు & మురుగునీరు',
       ELECTRICAL: '⚡ విద్యుత్ & లైట్లు',
-      HEALTH: '🏥 ప్రజా ఆరోగ్యం'
+      HEALTH: '🏥 ప్రజా ఆరోగ్యం',
+      TRAFFIC_PARKS: '🚦 ఆక్రమణలు & ట్రాఫిక్'
     },
     priorityLabel: 'ప్రాధాన్యత:',
     allPriorities: 'అన్ని ప్రాధాన్యతలు',
@@ -580,7 +582,8 @@ const I18N = {
       SANITATION: '🗑️ कचरा और स्वच्छता',
       WATER_SEWER: '💧 जल और सीवरेज',
       ELECTRICAL: '⚡ बिजली और प्रकाश',
-      HEALTH: '🏥 सार्वजनिक स्वास्थ्य'
+      HEALTH: '🏥 सार्वजनिक स्वास्थ्य',
+      TRAFFIC_PARKS: '🚦 अतिक्रमण और यातायात'
     },
     priorityLabel: 'प्राथमिकता:',
     allPriorities: 'सभी प्राथमिकताएं',
@@ -774,7 +777,8 @@ const I18N = {
       SANITATION: '🗑️ ಕಸ & ನೈರ್ಮಲ್ಯ',
       WATER_SEWER: '💧 ನೀರು & ಒಳಚರಂಡಿ',
       ELECTRICAL: '⚡ ವಿದ್ಯುತ್ & ಬೀದಿ ದೀಪಗಳು',
-      HEALTH: '🏥 ಸಾರ್ವಜನಿಕ ಆರೋಗ್ಯ'
+      HEALTH: '🏥 ಸಾರ್ವಜನಿಕ ಆರೋಗ್ಯ',
+      TRAFFIC_PARKS: '🚦 ಒತ್ತುವರಿ & ಸಂಚಾರ'
     },
     priorityLabel: 'ಆದ್ಯತೆ:',
     allPriorities: 'ಎಲ್ಲಾ ಆದ್ಯತೆಗಳು',
@@ -965,7 +969,8 @@ const I18N = {
       SANITATION: '🗑️ कचरा आणि स्वच्छता',
       WATER_SEWER: '💧 पाणी आणि सांडपाणी',
       ELECTRICAL: '⚡ वीज आणि दिवे',
-      HEALTH: '🏥 सार्वजनिक आरोग्य'
+      HEALTH: '🏥 सार्वजनिक आरोग्य',
+      TRAFFIC_PARKS: '🚦 अतिक्रमण आणि वाहतूक'
     },
     priorityLabel: 'प्राधान्य:',
     allPriorities: 'सर्व प्राधान्ये',
@@ -1156,7 +1161,8 @@ const I18N = {
       SANITATION: '🗑️ குப்பை & துப்புரவு',
       WATER_SEWER: '💧 குடிநீர் & கழிவுநீர்',
       ELECTRICAL: '⚡ மின்சாரம் & விளக்குகள்',
-      HEALTH: '🏥 பொது சுகாதாரம்'
+      HEALTH: '🏥 பொது சுகாதாரம்',
+      TRAFFIC_PARKS: '🚦 ஆக்கிரமிப்பு & போக்குவரத்து'
     },
     priorityLabel: 'முன்னுரிமை:',
     allPriorities: 'அனைத்து முன்னுரிமைகள்',
@@ -2731,6 +2737,11 @@ function applyLanguage(lang) {
   if (elDupMerged) elDupMerged.textContent = d.duplicatesMerged || 'Merged Duplicates';
 
   // Filters Toolbar
+  const elCityLabel = document.getElementById('i18nCityFilterLabel');
+  if (elCityLabel) elCityLabel.textContent = d.cityFilterLabel || 'City:';
+  if (cityFilter && cityFilter.options[0] && cityFilter.options[0].value === 'ALL') {
+    cityFilter.options[0].textContent = d.allCities || 'All Cities';
+  }
   const elLocLabel = document.getElementById('i18nLocalityLabel');
   if (elLocLabel) elLocLabel.textContent = d.localityLabel || 'Locality:';
   if (localityFilter && localityFilter.options[0] && localityFilter.options[0].value === 'ALL') {
@@ -3258,11 +3269,11 @@ function updateLocalityDropdown(selectedCity, selectElement, includeAllOption = 
 // Fetch Incidents from Server
 async function fetchIncidents() {
   const params = new URLSearchParams();
-  if (cityFilter.value !== 'ALL') params.append('city', cityFilter.value);
-  if (localityFilter.value !== 'ALL') params.append('locality', localityFilter.value);
-  if (priorityFilter.value !== 'ALL') params.append('priority', priorityFilter.value);
-  if (deptFilter.value !== 'ALL') params.append('department', deptFilter.value);
-  if (searchInput.value.trim()) params.append('search', searchInput.value.trim());
+  if (cityFilter && cityFilter.value !== 'ALL') params.append('city', cityFilter.value);
+  if (localityFilter && localityFilter.value !== 'ALL') params.append('locality', localityFilter.value);
+  if (priorityFilter && priorityFilter.value !== 'ALL') params.append('priority', priorityFilter.value);
+  if (deptFilter && deptFilter.value !== 'ALL') params.append('department', deptFilter.value);
+  if (searchInput && searchInput.value && searchInput.value.trim()) params.append('search', searchInput.value.trim());
 
   if (currentStatusView === 'RESOLVED') {
     params.append('status', 'RESOLVED');
@@ -3286,11 +3297,11 @@ async function fetchIncidents() {
 function updateDashboardStats(stats) {
   if (!stats) return;
 
-  statTotalComplaints.textContent = stats.total_complaints.toLocaleString();
-  statResolvedGovt.textContent = stats.resolved_count.toLocaleString();
-  statCriticalHazards.textContent = stats.critical_count.toLocaleString();
-  statDuplicatesMerged.textContent = stats.duplicates_merged.toLocaleString();
-  resolvedBadgeCount.textContent = stats.resolved_count.toLocaleString();
+  if (statTotalComplaints) statTotalComplaints.textContent = stats.total_complaints.toLocaleString();
+  if (statResolvedGovt) statResolvedGovt.textContent = stats.resolved_count.toLocaleString();
+  if (statCriticalHazards) statCriticalHazards.textContent = stats.critical_count.toLocaleString();
+  if (statDuplicatesMerged) statDuplicatesMerged.textContent = stats.duplicates_merged.toLocaleString();
+  if (resolvedBadgeCount) resolvedBadgeCount.textContent = stats.resolved_count.toLocaleString();
 
   // Active tasks calculation
   const activeCount = Math.max(0, stats.total_complaints - stats.resolved_count);
@@ -3304,27 +3315,27 @@ function updateDashboardStats(stats) {
 
   const cb = stats.category_breakdown || {};
 
-  if (cb.ROADS) {
+  if (cb.ROADS && typeof catRoadsTotal !== 'undefined' && catRoadsTotal && catRoadsResolved && catRoadsProgress) {
     catRoadsTotal.textContent = cb.ROADS.total;
     catRoadsResolved.textContent = cb.ROADS.resolved;
     catRoadsProgress.style.width = `${cb.ROADS.percent_resolved}%`;
   }
-  if (cb.SANITATION) {
+  if (cb.SANITATION && typeof catSanTotal !== 'undefined' && catSanTotal && catSanResolved && catSanProgress) {
     catSanTotal.textContent = cb.SANITATION.total;
     catSanResolved.textContent = cb.SANITATION.resolved;
     catSanProgress.style.width = `${cb.SANITATION.percent_resolved}%`;
   }
-  if (cb.WATER_SEWER) {
+  if (cb.WATER_SEWER && typeof catWaterTotal !== 'undefined' && catWaterTotal && catWaterResolved && catWaterProgress) {
     catWaterTotal.textContent = cb.WATER_SEWER.total;
     catWaterResolved.textContent = cb.WATER_SEWER.resolved;
     catWaterProgress.style.width = `${cb.WATER_SEWER.percent_resolved}%`;
   }
-  if (cb.ELECTRICAL) {
+  if (cb.ELECTRICAL && typeof catElecTotal !== 'undefined' && catElecTotal && catElecResolved && catElecProgress) {
     catElecTotal.textContent = cb.ELECTRICAL.total;
     catElecResolved.textContent = cb.ELECTRICAL.resolved;
     catElecProgress.style.width = `${cb.ELECTRICAL.percent_resolved}%`;
   }
-  if (cb.HEALTH) {
+  if (cb.HEALTH && typeof catHealthTotal !== 'undefined' && catHealthTotal && catHealthResolved && catHealthProgress) {
     catHealthTotal.textContent = cb.HEALTH.total;
     catHealthResolved.textContent = cb.HEALTH.resolved;
     catHealthProgress.style.width = `${cb.HEALTH.percent_resolved}%`;
@@ -3789,9 +3800,9 @@ inlineComplaintForm.addEventListener('submit', async (e) => {
 
     showToast(`📢 Complaint filed! Classified as [${result.data.priority}] ${result.data.department}. ${dupMsg}`);
     
-    if (cityFilter.value !== 'ALL' && cityFilter.value !== city) {
+    if (cityFilter && cityFilter.value !== 'ALL' && cityFilter.value !== city) {
       cityFilter.value = city;
-      updateLocalityDropdown(city, localityFilter, true);
+      if (localityFilter) updateLocalityDropdown(city, localityFilter, true);
     }
     
     // Refresh table and live tracking
@@ -3831,22 +3842,27 @@ function setupEventListeners() {
     });
   }
 
-  inlineCitySelect.addEventListener('change', () => {
-    updateLocalityDropdown(inlineCitySelect.value, inlineLocalitySelect, false);
-  });
+  if (inlineCitySelect) {
+    inlineCitySelect.addEventListener('change', () => {
+      if (inlineLocalitySelect) updateLocalityDropdown(inlineCitySelect.value, inlineLocalitySelect, false);
+    });
+  }
 
   let searchTimeout = null;
-  searchInput.addEventListener('input', () => {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(fetchIncidents, 250);
-  });
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(fetchIncidents, 250);
+    });
+  }
 
   const resetAll = () => {
     if (searchInput) searchInput.value = '';
     if (cityFilter) {
       cityFilter.value = 'ALL';
-      updateLocalityDropdown('ALL', localityFilter, true);
+      if (localityFilter) updateLocalityDropdown('ALL', localityFilter, true);
     }
+    if (localityFilter) localityFilter.value = 'ALL';
     if (priorityFilter) priorityFilter.value = 'ALL';
     if (deptFilter) deptFilter.value = 'ALL';
     currentStatusView = 'ACTIVE';
@@ -3854,13 +3870,15 @@ function setupEventListeners() {
     if (toggleResolvedView) toggleResolvedView.classList.remove('active');
     fetchIncidents();
   };
-  resetFiltersBtn.addEventListener('click', resetAll);
-  emptyResetBtn.addEventListener('click', resetAll);
+  if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetAll);
+  if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetAll);
 
-  closeDrawerBtn.addEventListener('click', closeDrawer);
-  detailDrawer.addEventListener('click', (e) => {
-    if (e.target === detailDrawer) closeDrawer();
-  });
+  if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+  if (detailDrawer) {
+    detailDrawer.addEventListener('click', (e) => {
+      if (e.target === detailDrawer) closeDrawer();
+    });
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -4765,7 +4783,7 @@ function filterMunicipalDepartment(dept) {
 
   // 3. Sync with classic dept filter if present and trigger fetch
   if (deptFilter) {
-    deptFilter.value = (dept === 'TRAFFIC_PARKS' ? 'ALL' : dept);
+    deptFilter.value = dept;
   }
 
   fetchIncidents();
