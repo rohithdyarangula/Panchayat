@@ -1,0 +1,137 @@
+[
+  {
+    "text": "Live electric cable snapped from transformer pole near Metro Pillar 42, 8th Main Jayanagar. Sparking on the wet road, huge fire danger please send lineman immediately!",
+    "city": "Bengaluru",
+    "locality": "Jayanagar",
+    "ward": "Ward 12",
+    "citizen_name": "Aarav Sharma",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Dangerous sparking wire lying on the pavement outside metro pillar 42 in Jayanagar. Pedestrians running away, please cut off power urgently.",
+    "city": "Bengaluru",
+    "locality": "Jayanagar",
+    "ward": "Ward 12",
+    "citizen_name": "Priya Nair",
+    "source": "WHATSAPP_BOT",
+    "status": "NEW"
+  },
+  {
+    "text": "Electric wire broke and falling on road near Jayanagar metro pillar 42. School kids walk here, urgent emergency!",
+    "city": "Bengaluru",
+    "locality": "Jayanagar",
+    "ward": "Ward 12",
+    "citizen_name": "Rohan Gupta",
+    "source": "VOICE_CALL_IVR",
+    "status": "NEW"
+  },
+  {
+    "text": "Major water pipeline burst opposite Apollo Hospital on Bannerghatta Main Road. Clean drinking water flooding entire road, low water pressure in homes.",
+    "city": "Bengaluru",
+    "locality": "Bannerghatta",
+    "ward": "Ward 04",
+    "citizen_name": "Deepak Kumar",
+    "source": "CITIZEN_PORTAL",
+    "status": "IN_PROGRESS"
+  },
+  {
+    "text": "Heavy water leakage from municipal main line in front of Apollo clinic Bannerghatta road. Road is completely submerged under 2 feet of water.",
+    "city": "Bengaluru",
+    "locality": "Bannerghatta",
+    "ward": "Ward 04",
+    "citizen_name": "Sunita Reddy",
+    "source": "WHATSAPP_BOT",
+    "status": "IN_PROGRESS"
+  },
+  {
+    "text": "Huge crater pothole in the middle of 100ft road near Koramangala 5th Block Junction. Two-wheelers skidding every hour, serious accident risk.",
+    "city": "Bengaluru",
+    "locality": "Koramangala",
+    "ward": "Ward 05",
+    "citizen_name": "Kavita Rao",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Garbage dump overflowing for last 5 days near Gandhi Bazaar Vegetable Market. Stray cattle and dogs scattering rotting waste, unbearable stench.",
+    "city": "Bengaluru",
+    "locality": "Gandhi Bazaar",
+    "ward": "Ward 09",
+    "citizen_name": "Ananya Joshi",
+    "source": "CITIZEN_PORTAL",
+    "status": "TRIAGED"
+  },
+  {
+    "text": "Open uncovered manhole on pedestrian sidewalk near City Railway Station Gate 3 in Majestic. Severe danger at night.",
+    "city": "Bengaluru",
+    "locality": "Majestic / Central",
+    "ward": "Ward 01",
+    "citizen_name": "Vikram Sethi",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Severe waterlogging and clogged storm drain outside Andheri West Railway Station in Mumbai. Traffic stalled for 3 hours.",
+    "city": "Mumbai",
+    "locality": "Andheri West",
+    "ward": "Ward K-West",
+    "citizen_name": "Sameer Khan",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Massive garbage pile near Bandra West Linking Road market blocking pedestrian footpath in Mumbai.",
+    "city": "Mumbai",
+    "locality": "Bandra West",
+    "ward": "Ward H-West",
+    "citizen_name": "Neha Mehta",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Deep hazardous pothole near Connaught Place Outer Circle block B in Delhi causing multiple vehicle punctures.",
+    "city": "Delhi",
+    "locality": "Connaught Place",
+    "ward": "Zone Central",
+    "citizen_name": "Amitabh Verma",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Open electrical junction box sparking near Hitec City Cyber Towers signal in Hyderabad. High danger for tech park commuters.",
+    "city": "Hyderabad",
+    "locality": "Hitec City",
+    "ward": "Circle 20",
+    "citizen_name": "Suresh Babu",
+    "source": "CITIZEN_PORTAL",
+    "status": "NEW"
+  },
+  {
+    "text": "Hazardous road crater on ITPL Main Road in Whitefield successfully repaired with asphalt concrete paving.",
+    "city": "Bengaluru",
+    "locality": "Whitefield",
+    "ward": "Ward 08",
+    "citizen_name": "Manoj Patel",
+    "source": "CITIZEN_PORTAL",
+    "status": "RESOLVED"
+  },
+  {
+    "text": "Sanitation compactor cleared overflowing garbage dumpster and sanitized the entire 100ft road corner in Indiranagar.",
+    "city": "Bengaluru",
+    "locality": "Indiranagar",
+    "ward": "Ward 03",
+    "citizen_name": "Gita Shenoy",
+    "source": "CITIZEN_PORTAL",
+    "status": "RESOLVED"
+  },
+  {
+    "text": "Streetlight pole fixed with energy-saving LED luminaire on 4th cross residential layout in Malleshwaram.",
+    "city": "Bengaluru",
+    "locality": "Malleshwaram",
+    "ward": "Ward 02",
+    "citizen_name": "Nandini Swamy",
+    "source": "CITIZEN_PORTAL",
+    "status": "RESOLVED"
+  }
+]

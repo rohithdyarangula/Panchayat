@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Midnight Slate & Obsidian -->
+    <linearGradient id="pBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="60%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#090D16"/>
+    </linearGradient>
+
+    <!-- Civic Azure & Sapphire Gradient -->
+    <linearGradient id="pBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+
+    <!-- Radiant Golden Council Gradient -->
+    <linearGradient id="pGold" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D97706"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="80%" stop-color="#FBBF24"/>
+      <stop offset="100%" stop-color="#FEF08A"/>
+    </linearGradient>
+
+    <!-- Emerald Resolution Gradient -->
+    <linearGradient id="pGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <!-- Subtle Radial Glow -->
+    <radialGradient id="pGlow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#2563EB" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#F59E0B" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="pSoftDrop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Modern Rounded Squircle Frame -->
+  <rect x="24" y="24" width="464" height="464" rx="120" fill="url(#pBg)" stroke="#334155" stroke-width="2" stroke-opacity="0.45"/>
+  <rect x="24" y="24" width="464" height="464" rx="120" fill="url(#pGlow)"/>
+
+  <!-- Panch Council of 5 Pillars and Minimal Monogram "P" -->
+  <g filter="url(#pSoftDrop)">
+    <!-- 1. The Strong Civic Foundation Stem (Pillar 1 - Chief Pillar of Governance) -->
+    <rect x="142" y="116" width="48" height="280" rx="24" fill="url(#pBlue)"/>
+
+    <!-- 2. The 5 Rising Assembly Pillars (Panch Council of 5 Pillars) forming the Civic Arch -->
+    <!-- Pillar 2: Citizen Voice -->
+    <rect x="210" y="170" width="18" height="172" rx="9" fill="url(#pGold)" opacity="0.9"/>
+    
+    <!-- Pillar 3: Central Deliberation & Justice -->
+    <rect x="254" y="145" width="18" height="197" rx="9" fill="url(#pGold)"/>
+    
+    <!-- Pillar 4: Municipal Action & Infrastructure -->
+    <rect x="298" y="170" width="18" height="172" rx="9" fill="url(#pGold)" opacity="0.9"/>
+    
+    <!-- Pillar 5: Statutory SLAs & Resolution -->
+    <rect x="342" y="205" width="18" height="137" rx="9" fill="url(#pGold)" opacity="0.8"/>
+
+    <!-- 3. Unifying Golden Civic Canopy Arch (Democratic Roof forming the letter "P") -->
+    <path d="M 166 120 C 296 120, 380 162, 380 240 C 380 318, 296 352, 166 352" 
+          fill="none" 
+          stroke="url(#pGold)" 
+          stroke-width="36" 
+          stroke-linecap="round"/>
+
+    <!-- 4. Inner Sapphire Loop (Flow of Community Trust) -->
+    <path d="M 190 168 C 270 168, 324 196, 324 240 C 324 284, 270 306, 190 306" 
+          fill="none" 
+          stroke="url(#pBlue)" 
+          stroke-width="14" 
+          stroke-linecap="round" 
+          opacity="0.9"/>
+
+    <!-- 5. Central Emerald Resolution Seal (Civic Harmony) -->
+    <circle cx="254" cy="240" r="14" fill="url(#pGreen)"/>
+    <circle cx="254" cy="240" r="6" fill="#FFFFFF"/>
+  </g>
+</svg>

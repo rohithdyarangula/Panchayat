@@ -1,0 +1,14 @@
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Local SQLite Database Files
+data/*.sqlite
+data/*.sqlite-*
+*.sqlite
+
+# Node modules & OS metadata
+node_modules/
+.DS_Store
+*.log

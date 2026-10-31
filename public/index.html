@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panchayat</title>
+  
+  <!-- Google Fonts: Outfit, Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Favicon with Minimal Aesthetic Panchayat Logo -->
+  <link rel="icon" type="image/svg+xml" href="/images/panchayat_logo.svg">
+
+  <!-- Leaflet CSS for OpenStreetMap display -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Custom Stylesheet with Vibrant MLH Design System & Nike Slide Dynamics -->
+  <link rel="stylesheet" href="/css/style.css?v=8.0">
+</head>
+<body class="civic-soft-bg">
+
+  <!-- ============================================================== -->
+  <!-- ROLE SELECTION GATEWAY MODAL (SHOWN FIRST ON LANDING)          -->
+  <!-- ============================================================== -->
+  <div id="roleSelectorGate" class="role-gate-modal animate-nike-slide">
+    <div class="role-gate-card">
+      <div class="role-gate-header">
+        <div class="role-gate-brand-row">
+          <img src="/images/panchayat_logo.svg" alt="Panchayat Logo" class="role-gate-logo">
+          <div>
+            <h2 class="role-gate-title">Welcome to Panchayat</h2>
+          </div>
+        </div>
+        <p class="role-gate-sub">Who are you? Select your portal workspace to continue:</p>
+      </div>
+
+      <div class="role-gate-options">
+        <!-- Option 1: Citizen / Resident -->
+        <div class="role-option-card citizen-option" onclick="selectRoleMode('citizen', true)">
+          <div class="role-option-top">
+            <span class="role-option-icon">👤</span>
+            <span class="role-option-badge">CITIZEN PORTAL</span>
+          </div>
+          <h3 class="role-option-title">I am a Citizen / Resident</h3>
+          <p class="role-option-desc">
+            File civic grievances across your city, track your registered complaint status (Completed vs In-Progress), inspect completion photo proof from municipal crew, and view your full complaint history.
+          </p>
+          <div class="role-option-highlights">
+            <span class="highlight-tag">📋 Active Complaint Status</span>
+            <span class="highlight-tag">📷 Before &amp; After Photo Proof</span>
+            <span class="highlight-tag">🗣️ Voice Dictation in 6 Languages</span>
+            <span class="highlight-tag">⭐ Contractor Rating &amp; Dispute</span>
+          </div>
+          <button type="button" class="btn role-select-btn" onclick="selectRoleMode('citizen', true)">
+            <span>Enter Citizen Portal &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Option 2: Municipal Ward Officer / Engineer -->
+        <div class="role-option-card municipal-option" onclick="selectRoleMode('municipal', true)">
+          <div class="role-option-top">
+            <span class="role-option-icon">🏛️</span>
+            <span class="role-option-badge">WARD OFFICER PORTAL</span>
+          </div>
+          <h3 class="role-option-title">I am a Municipal Ward Officer</h3>
+          <p class="role-option-desc">
+            Access incoming triaged complaints queue for your department (Electrical, Roads, Sanitation, Water), view what tasks need to be done, dispatch crews, and upload resolution photo proof directly to citizens.
+          </p>
+          <div class="role-option-highlights">
+            <span class="highlight-tag">⚡ Electrical / Roads / Sanitation Queue</span>
+            <span class="highlight-tag">📷 Upload Photo Proof of Completed Task</span>
+            <span class="highlight-tag">⏱️ 12h/24h Statutory SLAs</span>
+            <span class="highlight-tag">🚨 Commissioner Fast-Track Escalation</span>
+          </div>
+          <button type="button" class="btn role-select-btn" onclick="selectRoleMode('municipal', true)">
+            <span>Enter Municipal Ward Portal &rarr;</span>
+          </button>
+        </div>
+      </div>
+      
+      <div class="role-gate-footer">
+        <span>💡 Select your portal workspace to enter. You can switch portals anytime using the 'Switch Portal' button in the top bar.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP HEADER / NAV WITH NIKE-STYLE VIEW SWITCHER -->
+  <header class="top-nav">
+    <div class="nav-container">
+      
+      <!-- Brand Logo & Title (Pure Panchayat Monogram & Name Only) -->
+      <div class="brand" onclick="handleBrandLogoClick()" style="cursor: pointer;" title="Panchayat">
+        <div class="lucid-logo-container">
+          <img src="/images/panchayat_logo.svg" alt="Panchayat Logo" class="lucid-brand-img">
+        </div>
+        <div class="brand-text-block">
+          <div class="brand-title">
+            <span>PANCHAYAT</span>
+          </div>
+        </div>
+      </div>
+
+            <!-- ROLE SELECTOR PILL (Toggle between Citizen and Municipal Ward Portal) -->
+      <!-- ACTIVE PORTAL INDICATOR & SWITCH BUTTON -->
+      <div class="user-auth-indicator" id="userAuthIndicator">
+        <div class="auth-user-badge" id="authUserBadge" onclick="openRoleSelectorGate()" title="Click to switch portal workspace">
+          <span class="auth-role-icon" id="authRoleIcon">👤</span>
+          <div class="auth-user-info">
+            <span class="auth-user-name" id="authUserName">Citizen Portal</span>
+            <span class="auth-user-role-tag" id="authUserRoleTag">Public Resident</span>
+          </div>
+        </div>
+        <button type="button" class="btn-auth-signout" onclick="openRoleSelectorGate()" title="Switch Portal Workspace">
+          <span>🔄</span>
+          <span id="i18nSignOut">Switch Portal</span>
+        </button>
+      </div>
+
+      <!-- CENTER: NIKE-STYLE SEGMENTED VIEW SWITCHER TABS -->
+      <nav class="nike-view-switcher" id="mainViewSwitcher" role="tablist" aria-label="Portal Navigation">
+        <!-- Citizen Tabs (Default) -->
+        <button type="button" id="navTabComplaint" class="nike-tab-pill active" onclick="switchView('complaint')" role="tab">
+          <span class="nike-tab-icon">📢</span>
+          <span id="i18nNavComplaint">Report a Problem</span>
+        </button>
+        <button type="button" id="navTabMyComplaints" class="nike-tab-pill" onclick="switchView('my_complaints')" role="tab">
+          <span class="nike-tab-icon">📋</span>
+          <span id="i18nNavMyComplaints">My Complaints &amp; Status</span>
+        </button>
+        <button type="button" id="navTabDashboard" class="nike-tab-pill hidden" onclick="switchView('dashboard')" role="tab">
+          <span class="nike-tab-icon">📊</span>
+          <span id="i18nNavDashboard">Ward Tasks Queue</span>
+          <span class="nike-tab-badge" id="navActiveCountBadge">9</span>
+        </button>
+        <button type="button" class="nike-tab-pill" onclick="openWhatsAppModal()" role="tab" style="color: #059669; border-color: #10B981;">
+          <span class="nike-tab-icon">💬</span>
+          <span>WhatsApp Bot</span>
+        </button>
+      </nav>
+
+      <!-- Right Nav Actions: Language Selector -->
+      <div class="nav-actions">
+        <div class="lang-selector-box">
+          <span class="lang-icon">🌐</span>
+          <select id="languageSelect" title="Select Interface Language" aria-label="Select Interface Language">
+            <option value="en" selected>English (EN)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="mr">मराठी (Marathi)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- APP LAYOUT WRAPPER (Vertical Sideways Navigation & Responsive Layout) -->
+  <div class="app-layout-wrapper">
+    
+    <!-- VERTICAL SIDEWAYS NAVIGATION SIDEBAR -->
+    <aside class="vertical-side-nav" id="verticalSideNav" aria-label="Vertical Portal Navigation">
+      
+      <!-- Panchayat Brand Identity in Sidebar -->
+      <div class="side-nav-brand" onclick="handleBrandLogoClick()" style="cursor: pointer;" title="Panchayat">
+        <img src="/images/panchayat_logo.svg" alt="Panchayat Logo" class="side-brand-avatar">
+        <div>
+          <div class="side-brand-name">PANCHAYAT</div>
+        </div>
+      </div>
+
+      <div class="vertical-nav-group">
+        <div class="vertical-nav-title" id="i18nSideNavMenu">PORTAL WORKSPACE</div>
+        
+        <button class="vertical-nav-item active" id="sideNavComplaint" onclick="switchView('complaint')">
+          <div class="nav-item-content">
+            <span class="nav-icon">📢</span>
+            <span id="i18nSideComplaint">File Complaint</span>
+          </div>
+        </button>
+
+        <button class="vertical-nav-item" id="sideNavMyComplaints" onclick="switchView('my_complaints')">
+          <div class="nav-item-content">
+            <span class="nav-icon">👤</span>
+            <span id="i18nSideMyComplaints">My Complaints</span>
+          </div>
+          <span class="pulse-indicator-small" title="Your Personal Tickets"></span>
+        </button>
+
+        <button class="vertical-nav-item" id="sideNavTracking" onclick="switchView('tracking')">
+          <div class="nav-item-content">
+            <span class="nav-icon">📍</span>
+            <span id="i18nSideTracking">Live Tracking</span>
+          </div>
+        </button>
+
+        <button class="vertical-nav-item" id="sideNavDashboard" onclick="switchView('dashboard')">
+          <div class="nav-item-content">
+            <span class="nav-icon">📊</span>
+            <span id="i18nSideDashboard">Municipal Dashboard</span>
+          </div>
+          <span class="nav-badge" id="sideNavActiveCount">9</span>
+        </button>
+      </div>
+
+      <!-- Inbound Stream Simulator Button -->
+      <div style="padding: 0 4px; margin-top: 14px;">
+        <button class="btn btn-simulate-sidebar" onclick="openStreamSimulator()" title="Demonstrate ingestion from WhatsApp, SMS & Twitter">
+          <span>📥</span>
+          <span>Simulate WhatsApp Stream</span>
+        </button>
+      </div>
+
+      <!-- Quick Ward Engineer / SLA Line in Sidebar -->
+      <div class="vertical-nav-footer">
+        <div class="side-officer-pill">
+          <div class="side-officer-label" id="i18nSideEngineerTitle">WARD ENGINEER LINE</div>
+          <div class="side-officer-num">📞 +91 98450 11001</div>
+          <div class="side-officer-status">🟢 On Duty • Ward 12 (Jayanagar)</div>
+        </div>
+      </div>
+    </aside>
+  <!-- MAIN CONTAINER WITH DEDICATED SEPARATE VIEWS -->
+  <main class="main-content">
+    
+    <!-- ============================================================== -->
+    <!-- VIEW 1: DEDICATED CITIZEN COMPLAINT PORTAL                    -->
+    <!-- ============================================================== -->
+    <div id="viewComplaint" class="portal-view active">
+      
+      <!-- NIKE-STYLE CINEMATIC WALLPAPER HERO (Kinetic Editorial Slide) -->
+      <!-- WARM, RESPECTFUL & CLEAR CITIZEN WELCOME BANNER -->
+      <section class="welcome-hero citizen-friendly-hero animate-nike-slide">
+        <div class="welcome-hero-content citizen-hero-inner">
+          <div class="citizen-welcome-pill">🏛️ OFFICIAL GOVERNMENT CIVIC SERVICE</div>
+          <h1 class="welcome-title citizen-headline" id="i18nWelcomeTitle">
+            Namaste! Welcome to Panchayat
+          </h1>
+          <p class="welcome-desc citizen-desc" id="i18nWelcomeDesc">
+            Report civic issues in your neighborhood — such as <strong>potholes, overflowing garbage, broken streetlights, or leaking water pipes</strong>. You can type or simply click the microphone to speak in your native language. Your local ward engineer will be dispatched immediately.
+          </p>
+
+          <div class="welcome-action-row citizen-hero-ctas">
+            <button type="button" class="btn btn-primary btn-xl citizen-primary-cta" onclick="switchView('complaint')">
+              <span class="btn-megaphone-icon">📢</span>
+              <span id="i18nHeroComplaintBtn">Report a New Problem &rarr;</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-xl citizen-secondary-cta" onclick="switchView('my_complaints')">
+              <span>📋</span>
+              <span id="i18nHeroStatusBtn">Check My Complaint Status &rarr;</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- AESTHETIC CIVIC COMPLAINT FILING SECTION -->
+      <section class="section-card complaint-main-card animate-nike-slide" id="complaintMainSection">
+        <div class="complaint-card-header">
+          <div class="aesthetic-complaint-icon-badge" title="Citizen Civic Desk">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            </svg>
+          </div>
+          <div class="complaint-title-block">
+            <div class="complaint-title-row">
+              <h2 class="complaint-card-title">
+                <span id="i18nComplaintBoxTitle">File a Civic Complaint</span>
+              </h2>
+              <span class="complaint-live-pill">⚡ Direct Ward Routing</span>
+            </div>
+            <p class="complaint-card-subtitle" id="i18nComplaintBoxSubtitle">
+              Select your city and locality, then describe or speak your grievance. We will route it to the designated government ward officer immediately.
+            </p>
+          </div>
+        </div>
+
+        <!-- CITIZEN 1-CLICK DEMO GRIEVANCE EXAMPLES -->
+        <div class="citizen-demo-strip">
+          <div class="demo-strip-header">
+            <span class="demo-strip-badge">💡 1-CLICK DEMO EXAMPLES</span>
+            <span class="demo-strip-desc">Click any demo scenario to instantly fill &amp; test automated AI triage &amp; statutory SLAs:</span>
+          </div>
+          <div class="demo-examples-grid">
+            <button type="button" class="demo-pill-card" onclick="loadDemoComplaint('electrical')" title="Click to fill Live Sparking Wire grievance">
+              <span class="demo-icon">⚡</span>
+              <div class="demo-info">
+                <span class="demo-title">Live Wire &amp; Transformer</span>
+                <span class="demo-meta">Electrical &bull; Critical 12h SLA</span>
+              </div>
+            </button>
+            <button type="button" class="demo-pill-card" onclick="loadDemoComplaint('pothole')" title="Click to fill Road Pothole Crater grievance">
+              <span class="demo-icon">🕳️</span>
+              <div class="demo-info">
+                <span class="demo-title">Road Crater / Pothole</span>
+                <span class="demo-meta">Roads &bull; High 24h SLA</span>
+              </div>
+            </button>
+            <button type="button" class="demo-pill-card" onclick="loadDemoComplaint('garbage')" title="Click to fill Overflowing Waste Dump grievance">
+              <span class="demo-icon">🗑️</span>
+              <div class="demo-info">
+                <span class="demo-title">Overflowing Garbage</span>
+                <span class="demo-meta">Sanitation &bull; High 24h SLA</span>
+              </div>
+            </button>
+            <button type="button" class="demo-pill-card" onclick="loadDemoComplaint('water')" title="Click to fill Main Pipeline Burst grievance">
+              <span class="demo-icon">🚰</span>
+              <div class="demo-info">
+                <span class="demo-title">Water Pipeline Burst</span>
+                <span class="demo-meta">Water &bull; Critical 12h SLA</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <form id="inlineComplaintForm" class="complaint-card-body">
+          
+          <!-- STEP 1: CITY & LOCALITY SELECTION -->
+          <div class="form-section-box">
+            <div class="form-section-label" id="i18nStep1Label">📍 Step 1: Select Your City & Locality</div>
+            <div class="form-row">
+              <div class="form-group" style="flex: 1;">
+                <label id="i18nFormCityLabel">City:</label>
+                <select id="inlineCitySelect" class="form-control-lg">
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Pune">Pune</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="flex: 1;">
+                <label id="i18nFormLocalityLabel">Locality / Area:</label>
+                <select id="inlineLocalitySelect" class="form-control-lg"></select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: GRIEVANCE TEXT & VOICE -->
+          <div class="form-section-box" style="margin-top: 16px;">
+            <div class="form-section-label" id="i18nStep2Label">📝 Step 2: Describe the Problem</div>
+            
+            <div class="form-row" style="margin-bottom: 12px;">
+              <div class="form-group" style="flex: 1;">
+                <label id="i18nCitizenNameLabel">Your Name (Optional):</label>
+                <input type="text" id="inlineCitizenNameInput" class="form-control-lg" placeholder="e.g. Ramesh Babu (or leave blank for Resident)">
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label id="i18nChannelLabel">Source Channel:</label>
+                <select id="inlineComplaintSourceInput" class="form-control-lg">
+                  <option value="CITIZEN_PORTAL">Citizen Web Portal</option>
+                  <option value="VOICE_CALL_IVR">Voice IVR Helpline</option>
+                  <option value="WHATSAPP_BOT">WhatsApp Civic Bot</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="textarea-header">
+                <label id="i18nGrievanceLabel">Problem Details (Pothole, Garbage, Water Leak, Live Wire):</label>
+                
+                <!-- Native Voice Recognition Cluster -->
+                <div class="voice-controls-cluster">
+                  <div class="voice-native-lang-box" title="Select your spoken native language">
+                    <span class="voice-lang-icon">🗣️</span>
+                    <select id="voiceLanguageSelect" class="voice-native-select" aria-label="Spoken Native Language">
+                      <option value="te-IN" selected>తెలుగు (Telugu - te-IN)</option>
+                      <option value="hi-IN">हिन्दी (Hindi - hi-IN)</option>
+                      <option value="kn-IN">ಕನ್ನಡ (Kannada - kn-IN)</option>
+                      <option value="mr-IN">मराठी (Marathi - mr-IN)</option>
+                      <option value="ta-IN">தமிழ் (Tamil - ta-IN)</option>
+                      <option value="en-IN">English (India - en-IN)</option>
+                    </select>
+                  </div>
+
+                  <!-- Voice Dictation Button (Always active on click) -->
+                  <button type="button" id="inlineVoiceRecordBtn" class="voice-mic-btn-large" onclick="toggleVoiceRecording()" title="Click to Speak Grievance in Native Language">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                    <span id="inlineVoiceStatusText">Speak Voice 🎙️</span>
+                  </button>
+
+                  <!-- Talking Feature: Text-to-Speech Instructions -->
+                  <button type="button" id="btnSpeakInstructions" class="btn btn-outline btn-talking-assistant" onclick="speakComplaintInstructions()" title="Click to hear instructions spoken aloud in your native language" style="padding: 7px 13px; font-size: 0.8rem; border-radius: 20px;">
+                    <span id="speakIcon">🔊</span>
+                    <span id="speakLabel">Listen Aloud</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Listening Wave Visualizer with Dynamic Native Language Feedback & Stop Button -->
+              <div id="inlineVoiceWaveBar" class="voice-wave-container hidden">
+                <div class="wave-animation-box">
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                </div>
+                <div class="listening-status-content">
+                  <span class="pulse-red-dot"></span>
+                  <span class="listening-msg" id="i18nListeningMsg">Listening in your native language... Speak now</span>
+                </div>
+                <button type="button" class="btn btn-outline btn-stop-mic" onclick="stopVoiceRecording()">
+                  <span>⏹️ Stop Voice</span>
+                </button>
+              </div>
+
+              <textarea id="inlineComplaintTextInput" rows="4" class="form-control-lg" required placeholder="Describe the problem or click 'Speak Voice' to dictate (e.g. 'Huge garbage dump overflowing near market gate on 5th main')..."></textarea>
+              
+              <!-- Native Language Quick Speech Prompts (Click to Dictate or Test) -->
+              <div class="voice-prompt-chips-container" id="voicePromptChipsContainer">
+                <div class="chips-label" id="i18nQuickSpeechLabel">🎙️ Click or Speak in Your Native Language:</div>
+                <div class="chips-row" id="voicePromptChipsRow">
+                  <!-- Dynamically populated chips -->
+                </div>
+              </div>
+
+              <span class="input-hint" id="i18nVoiceHint">Tip: Native voice recognition supports continuous dictation in Telugu, Hindi, Kannada, Marathi, Tamil, and English. Pauses will not reset your words.</span>
+            </div>
+          </div>
+
+                    <!-- STEP 3: PHOTO EVIDENCE ATTACHMENT -->
+          <div class="form-section-box" style="margin-top: 16px;">
+            <div class="form-section-label" id="i18nStep3Label">📷 Step 3: Attach Evidence Photo (Optional)</div>
+            <div class="photo-upload-wrapper">
+              <div class="photo-upload-actions">
+                <input type="file" id="complaintPhotoFileInput" accept="image/*" style="display:none;" onchange="handlePhotoFileSelected(event)">
+                <button type="button" class="btn btn-outline btn-photo-upload" onclick="document.getElementById('complaintPhotoFileInput').click()">
+                  <span>📷</span>
+                  <span id="i18nUploadPhotoBtn">Upload Photo / Camera</span>
+                </button>
+                <span class="photo-or-span">or click quick sample photo:</span>
+                <div class="sample-evidence-chips">
+                  <button type="button" class="btn-sample-photo" onclick="selectSamplePhoto('/images/pothole_sample.svg', 'Road Crater')">🕳️ Road Crater</button>
+                  <button type="button" class="btn-sample-photo" onclick="selectSamplePhoto('/images/wire_hazard_sample.svg', 'Live Wire Hazard')">⚡ Live Wire Hazard</button>
+                  <button type="button" class="btn-sample-photo" onclick="selectSamplePhoto('/images/garbage_sample.svg', 'Garbage Dump')">🗑️ Overflowing Waste</button>
+                  <button type="button" class="btn-sample-photo" onclick="selectSamplePhoto('/images/water_leak_sample.svg', 'Water Main Burst')">💧 Water Main Burst</button>
+                </div>
+              </div>
+
+              <!-- Preview box when a photo is selected -->
+              <div id="photoPreviewContainer" class="photo-preview-box hidden">
+                <div class="photo-thumb-wrapper">
+                  <img id="photoPreviewImg" src="" alt="Evidence Preview" />
+                </div>
+                <div class="photo-meta-box">
+                  <span id="photoPreviewName" class="photo-name-label">photo.jpg</span>
+                  <span class="photo-badge-tag">📷 Attached to Complaint</span>
+                </div>
+                <button type="button" class="btn-remove-photo" onclick="clearSelectedPhoto()" title="Remove photo">✕</button>
+              </div>
+              <input type="hidden" id="complaintPhotoUrlInput" value="">
+            </div>
+          </div>
+
+          <div class="complaint-submit-row">
+            <button type="submit" id="inlineSubmitComplaintBtn" class="btn btn-primary btn-xl">
+              <span class="btn-megaphone-icon">📢</span>
+              <span id="i18nSubmitComplaintBtn">Submit Civic Complaint &rarr;</span>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      
+      <!-- Live tracking is now cleanly housed inside My Complaints tab for a clutter-free experience -->
+
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- VIEW: DEDICATED "MY COMPLAINTS" (ONLY User's Personal Issues) -->
+    <!-- ============================================================== -->
+    <div id="viewMyComplaints" class="portal-view hidden">
+      <div class="dashboard-top-hero animate-nike-slide">
+        <div>
+          <div class="dashboard-eyebrow" id="i18nMyComplaintsEyebrow">👤 CITIZEN PERSONAL CIVIC PORTAL</div>
+          <h1 class="dashboard-title" id="i18nMyComplaintsTitle">My Registered Complaints &amp; Status</h1>
+          <p class="dashboard-subtitle" id="i18nMyComplaintsSubtitle">
+            Your personal citizen grievance center. Check live government progress, inspect before vs after photos, and track resolution in real-time.
+          </p>
+        </div>
+        <div class="dashboard-hero-actions">
+          <button class="btn btn-primary" onclick="switchView('complaint')">
+            <span>📢</span>
+            <span id="i18nFileNewInMyComplaints">+ File New Complaint</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CITIZEN LIVE TRACKING SEARCH BAR -->
+      <div class="citizen-tracking-search-card animate-nike-slide">
+        <div class="tracking-search-header">
+          <span class="tracking-search-badge-icon">📍</span>
+          <div>
+            <h3 class="tracking-search-title" id="i18nTrackSearchTitle">Live Grievance Tracking &amp; Status</h3>
+            <p class="tracking-search-sub" id="i18nTrackSearchSub">Enter your grievance ID to check real-time SLA countdown and government repair progress</p>
+          </div>
+        </div>
+        <div class="tracking-search-form">
+          <input type="text" id="citizenSearchGrievanceInput" placeholder="Enter Complaint ID (e.g. INC-101)..." onkeydown="if(event.key==='Enter') searchCitizenGrievance()" />
+          <button type="button" class="btn btn-primary" onclick="searchCitizenGrievance()">
+            <span>🔍</span>
+            <span id="i18nTrackBtn">Track Status</span>
+          </button>
+        </div>
+        <div id="citizenTrackingResultBox" class="citizen-tracking-result hidden"></div>
+      </div>
+
+      <!-- Container where ONLY the user's personal complaints are rendered -->
+      <div id="myComplaintsListContainer" class="my-complaints-grid animate-nike-slide" style="margin-top: 20px;">
+        <!-- Dynamically rendered via renderMyComplaints() -->
+      </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- VIEW 2: DEDICATED SEPARATE MUNICIPAL DASHBOARD                 -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- VIEW 2: DEDICATED SEPARATE MUNICIPAL DASHBOARD                 -->
+    <!-- ============================================================== -->
+    <div id="viewDashboard" class="portal-view hidden">
+      
+      <!-- AESTHETIC STUDIO WORKSPACE (Exact match to user reference format) -->
+      <div class="municipal-studio-layout animate-nike-slide">
+        
+        <!-- LEFT SIDEBAR: CONTENT TREE & DEPARTMENTS ("Subjects" in user image) -->
+        <aside class="municipal-left-sidebar">
+          
+          <!-- Home Pill Button (All Departments) -->
+          <button type="button" class="studio-nav-home active" id="btnStudioHome" onclick="filterMunicipalDepartment('ALL')">
+            <span class="studio-home-icon">🏠</span>
+            <span class="studio-home-text" id="i18nStudioHome">Home</span>
+          </button>
+
+          <!-- Subjects / Departments Container -->
+          <div class="studio-subjects-section">
+            <div class="studio-subjects-label" id="i18nStudioDepartments">Departments</div>
+            <div class="studio-subjects-list">
+              <button type="button" class="studio-subject-item" id="subjRoads" onclick="filterMunicipalDepartment('ROADS')">
+                <span class="subject-dot dot-roads"></span>
+                <span class="subject-name" id="i18nSubjRoads">Roads &amp; Bridges</span>
+                <span class="subject-count" id="countSubjRoads">0</span>
+              </button>
+              <button type="button" class="studio-subject-item" id="subjSan" onclick="filterMunicipalDepartment('SANITATION')">
+                <span class="subject-dot dot-sanitation"></span>
+                <span class="subject-name" id="i18nSubjSan">Garbage &amp; Sanitation</span>
+                <span class="subject-count" id="countSubjSan">0</span>
+              </button>
+              <button type="button" class="studio-subject-item" id="subjWater" onclick="filterMunicipalDepartment('WATER_SEWER')">
+                <span class="subject-dot dot-water"></span>
+                <span class="subject-name" id="i18nSubjWater">Water &amp; Sewerage</span>
+                <span class="subject-count" id="countSubjWater">0</span>
+              </button>
+              <button type="button" class="studio-subject-item" id="subjElec" onclick="filterMunicipalDepartment('ELECTRICAL')">
+                <span class="subject-dot dot-electrical"></span>
+                <span class="subject-name" id="i18nSubjElec">Electrical &amp; Lighting</span>
+                <span class="subject-count" id="countSubjElec">0</span>
+              </button>
+              <button type="button" class="studio-subject-item" id="subjHealth" onclick="filterMunicipalDepartment('HEALTH')">
+                <span class="subject-dot dot-health"></span>
+                <span class="subject-name" id="i18nSubjHealth">Public Health</span>
+                <span class="subject-count" id="countSubjHealth">0</span>
+              </button>
+              <button type="button" class="studio-subject-item" id="subjTraffic" onclick="filterMunicipalDepartment('TRAFFIC_PARKS')">
+                <span class="subject-dot dot-traffic"></span>
+                <span class="subject-name" id="i18nSubjTraffic">Encroachment &amp; Traffic</span>
+                <span class="subject-count" id="countSubjTraffic">0</span>
+              </button>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- RIGHT / MAIN AREA: CLEAN, MINIMAL MUNICIPAL WORKSPACE -->
+        <main class="municipal-studio-main">
+          
+          <!-- Workspace Title & Active Department Focus Indicator -->
+          <div class="studio-workspace-header">
+            <div class="workspace-title-block">
+              <h2 class="workspace-title" id="studioWorkspaceTitle">Municipal Work Orders &amp; Triage Queue</h2>
+              <p class="workspace-sub" id="studioWorkspaceSub">Live citizen grievance stream triaged by department &amp; SLA priority</p>
+            </div>
+            <div id="studioDepartmentBadgeWrap" class="dept-focus-badge hidden">
+              <span id="studioDeptBadgeText" class="dept-badge-pill">ALL DEPARTMENTS</span>
+              <button type="button" class="btn-clear-dept-focus" id="i18nClearDeptFocus" onclick="filterMunicipalDepartment('ALL')">&times; Show All</button>
+            </div>
+          </div>
+
+          <!-- KPI Metric Strip (Maintains existing IDs: statTotalComplaints, etc.) -->
+          <div class="ward-kpi-grid">
+            <div class="ward-kpi-card kpi-card-blue">
+              <div class="ward-kpi-top"><span class="ward-kpi-icon">📋</span><span class="ward-kpi-tag tag-blue">TOTAL</span></div>
+              <div class="ward-kpi-val" id="statTotalComplaints">0</div>
+              <div class="ward-kpi-lbl" id="i18nTotalComplaints">Total Complaints</div>
+            </div>
+            <div class="ward-kpi-card kpi-card-amber">
+              <div class="ward-kpi-top"><span class="ward-kpi-icon">🔥</span><span class="ward-kpi-tag tag-amber">ACTIVE</span></div>
+              <div class="ward-kpi-val" id="statActiveComplaints">0</div>
+              <div class="ward-kpi-lbl" id="i18nActiveFieldTasks">Active Field Tasks</div>
+            </div>
+            <div class="ward-kpi-card kpi-card-red">
+              <div class="ward-kpi-top"><span class="ward-kpi-icon">🚨</span><span class="ward-kpi-tag tag-red">12H SLA</span></div>
+              <div class="ward-kpi-val text-red" id="statCriticalHazards">0</div>
+              <div class="ward-kpi-lbl" id="i18nCriticalHazards">Critical Hazards</div>
+            </div>
+            <div class="ward-kpi-card kpi-card-green">
+              <div class="ward-kpi-top"><span class="ward-kpi-icon">✅</span><span class="ward-kpi-tag tag-green">RESOLVED</span></div>
+              <div class="ward-kpi-val text-green" id="statResolvedGovt">0</div>
+              <div class="ward-kpi-lbl" id="i18nResolvedGovtLabel">Resolved by Crews</div>
+            </div>
+            <div class="ward-kpi-card kpi-card-purple">
+              <div class="ward-kpi-top"><span class="ward-kpi-icon">⚡</span><span class="ward-kpi-tag tag-purple">MERGED</span></div>
+              <div class="ward-kpi-val text-purple" id="statDuplicatesMerged">0</div>
+              <div class="ward-kpi-lbl" id="i18nDuplicatesMerged">Merged Duplicates</div>
+            </div>
+          </div>
+
+          <!-- MUNICIPAL WARD DEMO TOOLBAR & ACTIONS -->
+          <div class="municipal-demo-toolbar">
+            <div class="demo-toolbar-label">
+              <span class="demo-badge-icon">🏛️</span>
+              <span class="demo-badge-text">WARD DEMO CONTROLS:</span>
+            </div>
+            <div class="demo-toolbar-actions">
+              <button type="button" class="btn btn-demo-action" onclick="loadDemoWardFilter('CRITICAL')" title="Filter 12-Hour Critical Hazards">
+                <span>🚨 12h Critical Hazards (Demo)</span>
+              </button>
+              <button type="button" class="btn btn-demo-action" onclick="loadDemoWardFilter('ROADS')" title="Filter Roads & Potholes Work Orders">
+                <span>🛣️ Roads &amp; Potholes (Demo)</span>
+              </button>
+              <button type="button" class="btn btn-demo-action" onclick="loadDemoWardFilter('SANITATION')" title="Filter Sanitation Work Orders">
+                <span>🗑️ Garbage Clearance (Demo)</span>
+              </button>
+              <button type="button" class="btn btn-demo-action btn-demo-primary" onclick="openStreamSimulator()" title="Demonstrate ingestion from WhatsApp, SMS & Twitter">
+                <span>📥 Ingest 5 Fresh Grievances (Live Stream)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filters Toolbar & Table -->
+          <div class="minimal-filter-bar">
+            <div class="filter-group"><label id="i18nLocalityLabel">Locality:</label><select id="localityFilter"><option value="ALL">All Localities</option></select></div>
+            <div class="filter-group"><label id="i18nDeptLabel">Category:</label><select id="deptFilter"><option value="ALL">All Categories</option><option value="ROADS">Roads &amp; Bridges</option><option value="SANITATION">Sanitation</option><option value="WATER_SEWER">Water</option><option value="ELECTRICAL">Electrical</option><option value="HEALTH">Health</option></select></div>
+            <div class="filter-group"><label id="i18nPriorityLabel">Priority:</label><select id="priorityFilter"><option value="ALL">All Priorities</option><option value="CRITICAL">Critical</option><option value="HIGH">High</option><option value="MEDIUM">Medium</option><option value="LOW">Low</option></select></div>
+            <div class="search-box"><input type="text" id="searchInput" placeholder="Search problem, street..."></div>
+            <button id="resetFiltersBtn" class="btn btn-outline">Reset</button>
+            <div class="view-toggle-bar" style="margin-left: auto;">
+              <button id="toggleActiveView" class="toggle-btn active"><span id="i18nActiveToggleText">Active</span></button>
+              <button id="toggleResolvedView" class="toggle-btn"><span id="i18nResolvedToggleText">Resolved (<span id="resolvedBadgeCount">0</span>)</span></button>
+            </div>
+          </div>
+
+          <div class="table-container soft-table-card">
+            <div class="table-wrapper">
+              <table class="civic-table municipal-task-table">
+                <thead>
+                  <tr>
+                    <th style="width: 140px;" id="thPriority">URGENCY &amp; SLA</th>
+                    <th id="thSummary">TASK SUMMARY &amp; LOCATION</th>
+                    <th style="width: 165px;" id="thCategory">DEPARTMENT &amp; STAFF</th>
+                    <th style="width: 125px; text-align: center;" id="thStatus">STATUS</th>
+                    <th style="width: 185px; text-align: right;" id="thDetails">ACTIONS</th>
+                  </tr>
+                </thead>
+                <tbody id="incidentsTableBody"></tbody>
+              </table>
+              <div id="emptyState" class="empty-state hidden">
+                <h3 id="i18nEmptyTitle">NO COMPLAINTS FOUND</h3>
+                <p id="i18nEmptyDesc">No complaints match your current filters.</p>
+                <button id="emptyResetBtn" class="btn btn-primary">Reset Filters</button>
+              </div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- SLIDE-OVER INCIDENT DETAIL DRAWER (NIKE-STYLE SMOOTH SLIDE) -->
+  <div id="detailDrawer" class="drawer-backdrop hidden">
+    <div class="drawer-panel">
+      
+      <div class="drawer-header">
+        <div>
+          <div class="drawer-id" id="drawerIncidentId">INC-101</div>
+          <h2 class="drawer-title" id="drawerHeadline">High-voltage cable snapped sparking on road</h2>
+        </div>
+        <div class="drawer-header-actions">
+          <button id="readAloudBtn" class="voice-read-btn" title="Listen to Incident Summary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <span id="i18nReadAloud">Read Aloud</span>
+          </button>
+          <button id="closeDrawerBtn" class="close-btn" aria-label="Close Drawer">&times;</button>
+        </div>
+      </div>
+
+      <div class="drawer-body">
+        
+        <!-- Badges -->
+        <div class="drawer-badges">
+          <span id="drawerPriorityBadge" class="badge badge-critical">CRITICAL</span>
+          <span id="drawerDeptBadge" class="badge badge-dept">ELECTRICAL</span>
+          <span id="drawerStatusBadge" class="badge badge-status">NEW</span>
+          <span id="drawerCityBadge" class="badge badge-city">Bengaluru (Jayanagar)</span>
+          <span id="drawerEscalationBadge" class="badge badge-escalated hidden">🚨 ESCALATED (COMMISSIONER ALERT)</span>
+        </div>
+
+        <!-- SLA Status Card -->
+        <div class="drawer-card sla-card">
+          <div class="card-label-row">
+            <span class="card-label">SLA RESPONSE MONITOR (POLICY: <strong id="drawerSlaPolicy">12 HOURS</strong>)</span>
+            <span id="drawerSlaStatusBadge" class="sla-pill on-track">🟢 ON TRACK</span>
+          </div>
+
+          <div class="sla-timer-display">
+            <div class="sla-time-main" id="drawerSlaCountdown">11h 45m remaining</div>
+            <div class="sla-deadline-sub" id="drawerSlaDeadline">Deadline: Today at 8:30 PM</div>
+          </div>
+
+          <div class="sla-progress-track">
+            <div id="drawerSlaProgressBar" class="sla-progress-fill" style="width: 15%;"></div>
+          </div>
+
+          <div class="sla-action-bar">
+            <button id="fastTrackEscalateBtn" class="btn btn-escalate">
+              ⚡ Fast-Track Escalate to Commissioner &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Urgency Explanation -->
+        <div class="drawer-card">
+          <div class="card-label" id="i18nTriageRationaleLabel">AI TRIAGE RATIONALE</div>
+          <p id="drawerUrgencyReason" class="urgency-text">Immediate life & safety hazard detected: sparking live wire on wet pedestrian road.</p>
+        </div>
+
+        <!-- Location & Map -->
+        <div class="drawer-card">
+          <div class="card-label" id="i18nResolvedLocationLabel">RESOLVED LOCATION (OPENSTREETMAP NOMINATIM)</div>
+          <div class="location-details">
+            <strong id="drawerLocationDisplay">Near Metro Pillar 42, Jayanagar, Bengaluru</strong>
+            <div class="mono-coords" id="drawerCoords">12.9299° N, 77.5824° E</div>
+          </div>
+          <div id="leafletMap" class="leaflet-map-box"></div>
+        </div>
+
+        <!-- Merged Citizen Complaints -->
+        <div class="drawer-card">
+          <div class="card-label-row">
+            <span class="card-label" id="i18nMergedReportsLabel">MERGED CITIZEN COMPLAINTS</span>
+            <span class="mono-tag" id="drawerComplaintCount">3 Citizen Reports Merged</span>
+          </div>
+          <div id="drawerComplaintsList" class="complaints-list"></div>
+        </div>
+
+        <!-- Ward Officer Routing & Dispatch Form -->
+        <div class="drawer-card routing-card">
+          <div class="card-label" id="i18nOfficerDispatchLabel">WARD OFFICER DISPATCH & GOVERNMENT ACTION</div>
+          
+          <div class="form-group">
+            <label id="i18nAssignOfficerLabel">Assigned Government Officer:</label>
+            <select id="routeOfficerSelect">
+              <option value="Unassigned">Unassigned</option>
+            </select>
+            <div id="officerContactInfo" class="officer-contact-pill hidden">
+              <span>📞 Contact: <strong id="officerPhoneDisplay"></strong></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label id="i18nResolutionStatusLabel">Government Resolution Status:</label>
+            <select id="routeStatusSelect">
+              <option value="NEW">NEW (Reported by Citizen)</option>
+              <option value="TRIAGED">TRIAGED (Verified by AI)</option>
+              <option value="IN_PROGRESS">IN_PROGRESS (Crew Dispatched)</option>
+              <option value="RESOLVED">✅ RESOLVED (Fixed by Government)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label id="i18nOfficerNoteLabel">Officer Field Note:</label>
+            <input type="text" id="routeNotesInput" placeholder="e.g. Lineman vehicle dispatched at 10:45 AM...">
+          </div>
+
+          <button id="saveRoutingBtn" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            Update & Route Problem &rarr;
+          </button>
+        </div>
+
+                <!-- Photo Evidence Card -->
+        <div id="drawerPhotoCard" class="drawer-card hidden">
+          <div class="card-label-row">
+            <span class="card-label" id="i18nPhotoEvidenceLabel">📷 CITIZEN PHOTO EVIDENCE</span>
+            <span class="mono-tag">Visual Verification</span>
+          </div>
+          <div class="drawer-photo-wrapper">
+            <img id="drawerPhotoImg" src="" alt="Citizen Photo Evidence" />
+          </div>
+        </div>
+
+        <!-- Citizen Resolution Verification & Rating Card -->
+        <div id="drawerFeedbackCard" class="drawer-card verification-rating-card">
+          <div class="card-label-row">
+            <span class="card-label" id="i18nRatingSectionTitle">⭐ CITIZEN RESOLUTION VERIFICATION & RATING</span>
+            <span id="drawerRatingStatusBadge" class="sla-pill on-track">CITIZEN FEEDBACK</span>
+          </div>
+
+          <div id="drawerRatingFormBlock">
+            <p class="rating-instructions" id="i18nRatingInstructions">
+              Has the municipal contractor or ward engineer resolved this issue satisfactorily? Rate their response speed and workmanship:
+            </p>
+            
+            <div class="star-rating-row" id="drawerStarRow">
+              <span class="star-btn" data-star="1" onclick="setDrawerRating(1)">★</span>
+              <span class="star-btn" data-star="2" onclick="setDrawerRating(2)">★</span>
+              <span class="star-btn" data-star="3" onclick="setDrawerRating(3)">★</span>
+              <span class="star-btn" data-star="4" onclick="setDrawerRating(4)">★</span>
+              <span class="star-btn" data-star="5" onclick="setDrawerRating(5)">★</span>
+              <span class="star-score-text" id="drawerStarScoreText">Tap to rate</span>
+            </div>
+
+            <div class="form-group" style="margin-top: 12px;">
+              <input type="text" id="drawerFeedbackInput" class="form-control" placeholder="Optional comments on contractor workmanship, road quality, or speed...">
+            </div>
+
+            <div class="rating-action-buttons">
+              <button type="button" id="drawerSubmitRatingBtn" class="btn btn-primary" onclick="submitCitizenFeedback(false)">
+                <span>⭐</span> <span id="i18nSubmitRatingBtn">Verify & Submit Rating</span>
+              </button>
+              <button type="button" id="drawerDisputeBtn" class="btn btn-dispute" onclick="submitCitizenFeedback(true)">
+                <span>⚠️</span> <span id="i18nDisputeBtn">Work Incomplete? Dispute & Re-open</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="drawerRatingSubmittedBlock" class="rating-submitted-notice hidden">
+            <div class="verified-check-pill">
+              <span>✅</span> <strong>Citizen Verified & Rated</strong>
+            </div>
+            <div class="submitted-stars" id="drawerSubmittedStars">⭐⭐⭐⭐⭐</div>
+            <div class="submitted-feedback-text" id="drawerSubmittedFeedback">"Promptly attended and resolved within SLA window."</div>
+            <button type="button" class="btn btn-outline btn-sm" onclick="reopenRatingForm()" style="margin-top: 8px;">Edit Rating / Dispute Work</button>
+          </div>
+        </div>
+
+        <!-- Audit History Log -->
+        <div class="drawer-card">
+          <div class="card-label" id="i18nAuditLogLabel">ACTIVITY & AUDIT TRAIL</div>
+          <div id="drawerAuditLog" class="audit-log"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- FLOATING WHATSAPP CIVIC BOT BUTTON -->
+  <button id="floatingWhatsAppBtn" class="floating-whatsapp-btn" onclick="openWhatsAppModal()" title="Chat with Panchayat WhatsApp Civic Bot">
+    <div class="whatsapp-btn-pulse"></div>
+    <span class="whatsapp-btn-icon">💬</span>
+    <span class="whatsapp-btn-text" id="i18nFloatingWaText">WhatsApp Bot</span>
+    <span class="whatsapp-online-badge">● Online</span>
+  </button>
+
+  <!-- INTERACTIVE WHATSAPP BOT MODAL -->
+  <div id="whatsAppBotModal" class="wa-modal-backdrop hidden">
+    <div class="wa-modal-container">
+      
+      <!-- WhatsApp Header -->
+      <div class="wa-header">
+        <div class="wa-header-left">
+          <button class="wa-back-btn" onclick="closeWhatsAppModal()">←</button>
+          <img src="/images/panchayat_logo.svg" class="wa-avatar" alt="Panchayat Bot">
+          <div class="wa-contact-info">
+            <div class="wa-contact-name">
+              <span id="i18nWaBotName">Panchayat Civic Assistant</span>
+              <span class="wa-verified-badge" title="Official Government Verified Channel">✓</span>
+            </div>
+            <div class="wa-status-text" id="i18nWaBotStatus">online • Automated Triage Active 24/7</div>
+          </div>
+        </div>
+        <div class="wa-header-actions">
+          <button class="wa-icon-btn" onclick="resetWhatsAppChat()" title="Clear Chat">🔄</button>
+          <button class="wa-close-btn" onclick="closeWhatsAppModal()" title="Close">&times;</button>
+        </div>
+      </div>
+
+      <!-- WhatsApp Messages Body -->
+      <div id="waChatBody" class="wa-chat-body">
+        <div class="wa-encryption-notice">
+          🔒 Messages are processed in real-time by Panchayat Automated Triage Engine and routed directly to Municipal Ward Engineers.
+        </div>
+        
+        <!-- Bot Initial Greeting -->
+        <div class="wa-msg-bubble wa-bot-msg">
+          <div class="wa-msg-text" id="i18nWaGreeting">
+            Namaste! 🙏 Welcome to <strong>Panchayat Civic WhatsApp Service</strong>.<br><br>
+            Citizens can report civic issues like <strong>potholes, garbage dumps, live wires, or water leaks</strong> right here. Describe your grievance or pick a quick option below:
+          </div>
+          <div class="wa-msg-time">Just now</div>
+        </div>
+
+        <!-- Quick reply suggestions -->
+        <div class="wa-quick-replies" id="waQuickReplies">
+          <button type="button" class="wa-chip" onclick="sendWhatsAppQuickPrompt('⚡ Live high-voltage wire snapped on road in Jayanagar', '/images/wire_hazard_sample.svg')">⚡ Snapped Wire (Jayanagar)</button>
+          <button type="button" class="wa-chip" onclick="sendWhatsAppQuickPrompt('🕳️ Massive dangerous road crater / pothole on 80ft road Koramangala', '/images/pothole_sample.svg')">🕳️ Dangerous Pothole (Koramangala)</button>
+          <button type="button" class="wa-chip" onclick="sendWhatsAppQuickPrompt('🗑️ Heavy garbage dump overflowing near market in Gandhi Bazaar', '/images/garbage_sample.svg')">🗑️ Overflowing Garbage (Gandhi Bazaar)</button>
+          <button type="button" class="wa-chip" onclick="sendWhatsAppQuickPrompt('💧 Clean drinking water main pipe burst flooding Bannerghatta road', '/images/water_leak_sample.svg')">💧 Pipe Burst (Bannerghatta)</button>
+        </div>
+      </div>
+
+      <!-- Image preview in WhatsApp if attached -->
+      <div id="waPhotoPreviewBar" class="wa-photo-preview-bar hidden">
+        <img id="waPhotoPreviewImg" src="" alt="Evidence" />
+        <span id="waPhotoPreviewText" class="wa-photo-filename">evidence.jpg</span>
+        <button type="button" class="wa-photo-remove-btn" onclick="clearWhatsAppPhoto()">✕</button>
+      </div>
+
+      <!-- WhatsApp Input Bar -->
+      <form id="waChatForm" class="wa-input-footer" onsubmit="handleWhatsAppSend(event)">
+        <input type="file" id="waPhotoFileInput" accept="image/*" style="display:none;" onchange="handleWhatsAppPhotoSelected(event)">
+        <button type="button" class="wa-attach-btn" onclick="document.getElementById('waPhotoFileInput').click()" title="Attach Photo Evidence">📎</button>
+        <input type="text" id="waMessageInput" class="wa-text-input" placeholder="Type a civic grievance (e.g. Broken streetlight in Jayanagar)..." autocomplete="off" required>
+        <button type="submit" id="waSendBtn" class="wa-send-btn" title="Send Grievance">➤</button>
+      </form>
+
+    </div>
+  </div>
+
+  
+  <!-- MUNICIPAL WARD TASK RESOLUTION MODAL (Ward Officers upload completion photo proof to citizen) -->
+  <div id="resolveTaskModal" class="wa-modal-backdrop hidden">
+    <div class="resolve-modal-card">
+      <div class="resolve-modal-header">
+        <div>
+          <span class="resolve-modal-badge">MUNICIPAL WARD TASK COMPLETION</span>
+          <h2 class="resolve-modal-title" id="resolveModalTitle">Complete Task &amp; Upload Photo Proof</h2>
+          <div class="resolve-modal-sub" id="resolveModalSub">INC-101 • Electrical Hazard • Bengaluru Ward 12</div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeResolveTaskModal()">&times;</button>
+      </div>
+
+      <div class="resolve-modal-body">
+        
+        <!-- Citizen's Reported Problem -->
+        <div class="resolve-problem-summary">
+          <div class="resolve-box-label">CITIZEN'S REPORTED PROBLEM:</div>
+          <div class="resolve-box-text" id="resolveCitizenComplaintText">
+            "Live high-voltage wire snapped near Metro Pillar 42, sparking on roadway."
+          </div>
+          <div id="resolveCitizenPhotoBox" class="resolve-reported-photo hidden" style="margin-top: 8px;">
+            <div style="font-size:0.75rem; font-weight:700; color:#64748B; margin-bottom:4px;">CITIZEN EVIDENCE PHOTO:</div>
+            <img id="resolveCitizenPhotoImg" src="" alt="Citizen Evidence" style="width:100px; height:68px; object-fit:cover; border-radius:6px; border:1px solid #000;" />
+          </div>
+        </div>
+
+        <!-- Step 1: Upload Resolution Photo Proof -->
+        <div class="form-section-box" style="margin-top: 14px;">
+          <div class="form-section-label">📷 Upload Resolution Photo Proof (Delivered Directly to Citizen):</div>
+          <p style="font-size: 0.85rem; color: #475569; margin-top: 4px;">
+            The reporting citizen will see this official photo proof on their dashboard verifying the work was completed.
+          </p>
+          
+          <div class="photo-upload-actions" style="margin-top: 8px;">
+            <input type="file" id="resolvePhotoFileInput" accept="image/*" style="display:none;" onchange="handleResolvePhotoSelected(event)">
+            <button type="button" class="btn btn-outline btn-photo-upload" onclick="document.getElementById('resolvePhotoFileInput').click()">
+              <span>📷</span> Take / Upload Work Photo
+            </button>
+            <span class="photo-or-span">or test camera proof vs AI generated proof:</span>
+            <div class="sample-evidence-chips">
+              <button type="button" class="btn-sample-photo" onclick="selectSampleResolutionPhoto('/images/resolved_road_sample.svg', 'Fresh Paved Road (Genuine Camera)')">🛣️ Fresh Paved Road (Genuine)</button>
+              <button type="button" class="btn-sample-photo" onclick="selectSampleResolutionPhoto('/images/resolved_wire_sample.svg', 'Repaired Insulated Line (Genuine Camera)')">⚡ Repaired Line (Genuine)</button>
+              <button type="button" class="btn-sample-photo btn-ai-fake" onclick="selectSampleResolutionPhoto('ai_generated_synthetic_pothole_fix.jpg', 'AI Generated Fake (Synthetic Deepfake)')" style="border-color:#DC2626; color:#DC2626; background:#FEF2F2;" title="Test AI image detector">🤖 Test AI Generated Fake</button>
+              <button type="button" class="btn-sample-photo btn-ai-fake" onclick="selectSampleResolutionPhoto('modified_generative_fill_patch.png', 'Generative Inpaint (AI Modified)')" style="border-color:#EA580C; color:#EA580C; background:#FFF7ED;" title="Test generative inpainting detector">🎨 Test AI Modified</button>
+            </div>
+          </div>
+
+          <!-- AI Image Authenticity & Deepfake Inspector Panel -->
+          <div id="aiImageCheckerPanel" class="ai-checker-panel hidden" style="margin-top: 10px;">
+            <div class="ai-checker-header">
+              <div class="ai-checker-title-row">
+                <span class="ai-shield-icon">🛡️</span>
+                <span class="ai-checker-title">AI IMAGE AUTHENTICITY &amp; DEEPFAKE INSPECTOR</span>
+                <span class="ai-verdict-badge" id="aiVerdictBadge">VERIFYING...</span>
+              </div>
+              <div class="ai-authenticity-score-row">
+                <div class="score-bar-track">
+                  <div class="score-bar-fill" id="aiScoreFill" style="width: 95%;"></div>
+                </div>
+                <span class="score-text" id="aiScoreText">Authenticity: 95%</span>
+              </div>
+            </div>
+
+            <!-- Forensic Findings Breakdown -->
+            <div class="ai-forensic-findings" id="aiForensicFindings">
+              <!-- Dynamically populated -->
+            </div>
+
+            <div id="aiTamperAlert" class="ai-tamper-alert hidden">
+              <span>🚨 FRAUD PREVENTION BLOCKED: Uploaded completion proof was flagged as AI-generated or synthetic. Fake completion photos are prohibited by Municipal Audit Policy. Genuine site photo required.</span>
+            </div>
+          </div>
+
+          <!-- Preview of resolution photo -->
+          <div id="resolvePhotoPreviewContainer" class="photo-preview-box hidden" style="margin-top: 10px;">
+            <div class="photo-thumb-wrapper">
+              <img id="resolvePhotoPreviewImg" src="" alt="Resolution Preview" />
+            </div>
+            <div class="photo-meta-box">
+              <span id="resolvePhotoPreviewName" class="photo-name-label">resolution_proof.jpg</span>
+              <span class="photo-badge-tag" id="resolvePhotoBadgeTag" style="background:#ECFDF5; color:#059669;">✅ Resolution Proof Ready</span>
+            </div>
+            <button type="button" class="btn-remove-photo" onclick="clearResolvePhoto()" title="Remove photo">✕</button>
+          </div>
+          <input type="hidden" id="resolvePhotoUrlInput" value="">
+        </div>
+
+        <!-- Step 2: Officer Field Completion Notes -->
+        <div class="form-section-box" style="margin-top: 14px;">
+          <div class="form-section-label">📝 Ward Officer Field Completion Notes:</div>
+          <input type="text" id="resolveNotesInput" class="form-control-lg" placeholder="e.g. Line crew elevated and double-insulated cables; power restored at 11:30 AM." style="width:100%; margin-top: 6px;">
+        </div>
+
+        <!-- Action Button -->
+        <div class="resolve-modal-actions" style="margin-top: 16px;">
+          <button type="button" id="btnConfirmTaskResolved" class="btn btn-primary btn-xl" style="width: 100%; justify-content: center;" onclick="confirmTaskResolution()">
+            <span>✅ Mark Task RESOLVED &amp; Publish Photo Proof to Citizen &rarr;</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Main App Script -->
+  <script src="/js/app.js?v=8.0"></script>
+</body>
+</html>

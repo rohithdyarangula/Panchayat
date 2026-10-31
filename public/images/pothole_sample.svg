@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="asphalt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2b2d42"/>
+      <stop offset="50%" stop-color="#1f2029"/>
+      <stop offset="100%" stop-color="#121318"/>
+    </linearGradient>
+    <radialGradient id="crater" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0a0a0c"/>
+      <stop offset="70%" stop-color="#18191f"/>
+      <stop offset="100%" stop-color="#2d2e38"/>
+    </radialGradient>
+  </defs>
+  <!-- Road Surface -->
+  <rect width="600" height="400" fill="url(#asphalt)"/>
+  <!-- Road Lane Markings -->
+  <line x1="30" y1="200" x2="130" y2="200" stroke="#f1c40f" stroke-width="8" stroke-dasharray="25,15" opacity="0.6"/>
+  <line x1="470" y1="200" x2="570" y2="200" stroke="#f1c40f" stroke-width="8" stroke-dasharray="25,15" opacity="0.6"/>
+  <!-- Pothole Crater -->
+  <ellipse cx="300" cy="220" rx="160" ry="85" fill="url(#crater)" stroke="#3a3c48" stroke-width="5"/>
+  <ellipse cx="290" cy="230" rx="110" ry="55" fill="#050507"/>
+  <!-- Cracks -->
+  <path d="M 140 220 Q 90 200 40 230 M 460 220 Q 520 240 570 210 M 300 135 Q 310 90 280 50 M 340 305 Q 360 350 390 380" stroke="#000000" stroke-width="3" fill="none" opacity="0.8"/>
+  <path d="M 230 150 Q 200 100 180 70 M 380 280 Q 420 330 450 350" stroke="#1a1a1f" stroke-width="2" fill="none"/>
+  <!-- Debris & Rubble -->
+  <polygon points="260,210 275,200 280,215" fill="#555866"/>
+  <polygon points="320,240 340,230 335,250" fill="#444654"/>
+  <polygon points="230,240 245,235 240,250" fill="#666978"/>
+  <polygon points="370,210 385,205 380,220" fill="#555866"/>
+  <!-- Stamp Overlay -->
+  <rect x="20" y="20" width="220" height="48" rx="6" fill="#000000" fill-opacity="0.75"/>
+  <text x="35" y="42" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" fill="#ff4d4f">CIVIC EVIDENCE PHOTO</text>
+  <text x="35" y="58" font-family="monospace" font-size="11" fill="#ffffff">GEO: 12.9352° N, 77.6245° E</text>
+  <!-- Warning badge -->
+  <rect x="420" y="20" width="160" height="32" rx="16" fill="#e74c3c"/>
+  <text x="500" y="41" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">ROAD CRATER</text>
+</svg>

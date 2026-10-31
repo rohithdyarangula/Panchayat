@@ -1,0 +1,19 @@
+{
+  "name": "civic-complaint-triage",
+  "version": "1.0.0",
+  "description": "Civic Complaint Triage & Routing Engine powered by Google Gemma 2 and OpenStreetMap",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": [
+    "civic-tech",
+    "gemma2",
+    "complaint-triage",
+    "openstreetmap",
+    "smart-city"
+  ],
+  "author": "Student Developer",
+  "license": "MIT"
+}

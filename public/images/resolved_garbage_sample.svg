@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cleanWall" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a6073"/>
+      <stop offset="100%" stop-color="#16222f"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="260" fill="url(#cleanWall)"/>
+  <rect y="260" width="600" height="140" fill="#2c3e50"/>
+  <!-- Spotless Clean Commercial Dumpster Sanitized -->
+  <rect x="180" y="160" width="240" height="150" fill="#27ae60" rx="10" stroke="#2ecc71" stroke-width="4"/>
+  <rect x="165" y="145" width="270" height="20" fill="#1e824c" rx="5"/>
+  <text x="300" y="240" font-family="-apple-system, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">100% CLEARED &amp; DISINFECTED</text>
+  <!-- Green Clean Plants -->
+  <circle cx="120" cy="270" r="25" fill="#2ecc71"/>
+  <circle cx="480" cy="270" r="25" fill="#2ecc71"/>
+  <!-- Official Proof Stamp -->
+  <rect x="20" y="20" width="270" height="52" rx="8" fill="#000000" fill-opacity="0.85" stroke="#2ecc71" stroke-width="2"/>
+  <text x="35" y="44" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="bold" fill="#2ecc71">✅ MUNICIPAL RESOLUTION PROOF</text>
+  <text x="35" y="62" font-family="monospace" font-size="11" fill="#FFFFFF">SOLID WASTE SANITATION WARD</text>
+  <!-- Work Completion Badge -->
+  <rect x="420" y="20" width="160" height="34" rx="17" fill="#2ecc71"/>
+  <text x="500" y="42" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold" fill="#07192E" text-anchor="middle">SITE SANITIZED</text>
+</svg>

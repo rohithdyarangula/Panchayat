@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="newAsphalt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e272e"/>
+      <stop offset="50%" stop-color="#2f3542"/>
+      <stop offset="100%" stop-color="#1e272e"/>
+    </linearGradient>
+  </defs>
+  <!-- Freshly Paved Asphalt Surface -->
+  <rect width="600" height="400" fill="url(#newAsphalt)"/>
+  <!-- Crisp New Road Lines -->
+  <line x1="0" y1="200" x2="600" y2="200" stroke="#FFC72C" stroke-width="10" stroke-dasharray="35,20"/>
+  <line x1="0" y1="50" x2="600" y2="50" stroke="#FFFFFF" stroke-width="6"/>
+  <line x1="0" y1="350" x2="600" y2="350" stroke="#FFFFFF" stroke-width="6"/>
+  <!-- Fresh Paved Texture -->
+  <rect x="180" y="120" width="240" height="160" rx="8" fill="#18191f" stroke="#2ed573" stroke-width="3" stroke-dasharray="8,6" opacity="0.8"/>
+  <text x="300" y="205" font-family="-apple-system, sans-serif" font-size="14" font-weight="bold" fill="#2ed573" text-anchor="middle">ASPHALT RELAID &amp; STEAM-ROLLED</text>
+  <!-- Municipal Official Proof Stamp -->
+  <rect x="20" y="20" width="260" height="52" rx="8" fill="#000000" fill-opacity="0.85" stroke="#2ed573" stroke-width="2"/>
+  <text x="35" y="44" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="bold" fill="#2ed573">✅ MUNICIPAL RESOLUTION PROOF</text>
+  <text x="35" y="62" font-family="monospace" font-size="11" fill="#FFFFFF">ROADS &amp; BRIDGES WARD DIVISION</text>
+  <!-- Work Completion Badge -->
+  <rect x="420" y="20" width="160" height="34" rx="17" fill="#2ed573"/>
+  <text x="500" y="42" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold" fill="#07192E" text-anchor="middle">TASK COMPLETED</text>
+</svg>

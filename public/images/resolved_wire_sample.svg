@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="skyClean" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2c3e50"/>
+      <stop offset="100%" stop-color="#34495e"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#skyClean)"/>
+  <rect y="290" width="600" height="110" fill="#1e272e"/>
+  <!-- Reinforced Insulated Utility Pole -->
+  <rect x="120" y="30" width="30" height="320" fill="#7f8c8d" rx="4"/>
+  <line x1="70" y1="80" x2="200" y2="80" stroke="#95a5a6" stroke-width="10"/>
+  <!-- Neat, Elevated, Double-Insulated High-Tension Cables -->
+  <line x1="0" y1="80" x2="600" y2="80" stroke="#00d2d3" stroke-width="6"/>
+  <line x1="0" y1="100" x2="600" y2="100" stroke="#00d2d3" stroke-width="6"/>
+  <!-- Safety Inspection Seal -->
+  <circle cx="300" cy="190" r="60" fill="#10ac84" opacity="0.9"/>
+  <text x="300" y="185" font-family="-apple-system, sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">LIVE HAZARD</text>
+  <text x="300" y="205" font-family="-apple-system, sans-serif" font-size="14" font-weight="900" fill="#FFFFFF" text-anchor="middle">NEUTRALIZED</text>
+  <!-- Municipal Official Proof Stamp -->
+  <rect x="20" y="20" width="270" height="52" rx="8" fill="#000000" fill-opacity="0.85" stroke="#10ac84" stroke-width="2"/>
+  <text x="35" y="44" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13" font-weight="bold" fill="#10ac84">✅ MUNICIPAL RESOLUTION PROOF</text>
+  <text x="35" y="62" font-family="monospace" font-size="11" fill="#FFFFFF">ELECTRICAL GRID SAFETY WARD</text>
+  <!-- Work Completion Badge -->
+  <rect x="420" y="20" width="160" height="34" rx="17" fill="#10ac84"/>
+  <text x="500" y="42" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold" fill="#FFFFFF" text-anchor="middle">POWER RESTORED</text>
+</svg>
